@@ -1,0 +1,6 @@
+{
+    "app_name": "Byakugan",
+    "author": "sharpcodex",
+    "main_module": "src/main/python/Byakugan/main.py",
+    "version": "0.0.0"
+}
