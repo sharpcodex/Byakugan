@@ -1,8 +1,7 @@
+import sys
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from fbs_runtime.application_context import cached_property
-from PyQt5.QtWidgets import QMainWindow
-
-import sys
+from windows.main_window import MainWindow
 
 class AppContext(ApplicationContext):
     def setup():
@@ -10,10 +9,9 @@ class AppContext(ApplicationContext):
 
     @cached_property
     def main_window(self):
-        return QMainWindow()
+        return MainWindow(self)
 
     def run(self):
-        self.main_window.resize(250, 150)
         self.main_window.show()
         return self.app.exec_()
 
