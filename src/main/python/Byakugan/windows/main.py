@@ -1,8 +1,8 @@
-import qtawesome as qta
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QToolBar, QAction
+import qtawesome as qta
 from fbs_runtime.application_context import cached_property
 
 from windows.ui.ui_main import Ui_MainWindow
