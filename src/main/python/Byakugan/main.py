@@ -3,17 +3,18 @@ import sys
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 from app_manager import AppManager
-from dbs.config_manager import Config
+from dbs.config import Config
 from windows.main import MainWindow
+from windows.themes import Themer
 
 if __name__ == '__main__':
-    app_ctx = ApplicationContext()
-    app_config = Config(app_ctx)
-    app = AppManager(app_ctx, app_config)
+    ctx = ApplicationContext()
+    config = Config(ctx)
+    app = AppManager(ctx, config)
 
-    main_window = MainWindow(app)
-    main_window.show()
+    window = Themer(app).setup_theme(MainWindow(app))
+    window.show()
 
-    exit_code = app_ctx.app.exec_()
-    app_config.close()
+    exit_code = ctx.app.exec_()
+    config.dispose()
     sys.exit(exit_code)

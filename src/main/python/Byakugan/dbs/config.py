@@ -12,9 +12,13 @@ class Config:
         self.cur.execute('SELECT Value FROM Config WHERE Name = "{}"'.format(name))
         return self.cur.fetchone()[0]
 
-    def close(self):
+    def dispose(self):
         self.conn.close()
 
     @cached_property
     def app_name(self):
         return self.get_config('app_name')
+
+    @cached_property
+    def app_theme(self):
+        return self.get_config('app_theme')
