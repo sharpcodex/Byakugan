@@ -1,19 +1,20 @@
+import qtawesome as qta
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QToolBar, QAction
-from PyQt5.uic import loadUi
-import qtawesome as qta
 from fbs_runtime.application_context import cached_property
 
+from gui.main_window.ui_main_window import Ui_MainWindow
 
-class MainWindow(QMainWindow):
+
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, app, *args, **kwargs):
         # class init
         self.app = app
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load Ui
-        loadUi(self.ui_file, self)
+        self.setupUi(self)
         self.installEventFilter(QWindowEventFilter(self))
         # Window setup
         self.setWindowTitle(self.app.config.app_name)
@@ -66,10 +67,6 @@ class MainWindow(QMainWindow):
 
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
-
-    @cached_property
-    def ui_file(self):
-        return str(self.app.ctx.get_resource('ui/ui_main_window.ui'))
 
     @cached_property
     def window_icon(self):
