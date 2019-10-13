@@ -8,14 +8,15 @@ from fbs_runtime.application_context import cached_property
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, ctx, *args, **kwargs):
+    def __init__(self, app, *args, **kwargs):
         # class init
-        self.ctx = ctx
+        self.app = app
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load Ui
         loadUi(self.ui_file, self)
         self.installEventFilter(QWindowEventFilter(self))
         # Window setup
+        self.setWindowTitle(self.app.config.app_name)
         self.setWindowIcon(self.window_icon)
         self.toolbar = QToolBar('toolbar')
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
@@ -68,11 +69,11 @@ class MainWindow(QMainWindow):
 
     @cached_property
     def ui_file(self):
-        return str(self.ctx.get_resource('ui/ui_main_window.ui'))
+        return str(self.app.ctx.get_resource('ui/ui_main_window.ui'))
 
     @cached_property
     def window_icon(self):
-        return QIcon(self.ctx.get_resource('images/main.png'))
+        return QIcon(self.app.ctx.get_resource('images/main.png'))
 
 
 class QWindowEventFilter(QtCore.QObject):
