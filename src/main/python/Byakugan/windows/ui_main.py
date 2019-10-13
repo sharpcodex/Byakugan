@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_main_window.ui'
+# Form implementation generated from reading ui file 'E:\workspace\Byakugan\Byakugan\src\main\python\Byakugan\windows\main\ui_main.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
