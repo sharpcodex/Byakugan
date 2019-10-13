@@ -1,3 +1,4 @@
 fbs
 PyQt5==5.9.2
 qtawesome
+qtmodern
