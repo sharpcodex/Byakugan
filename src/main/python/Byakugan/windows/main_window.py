@@ -1,4 +1,5 @@
-from PyQt5 import QtCore,Qt
+from PyQt5 import QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QToolBar, QAction
 from PyQt5.uic import loadUi
@@ -17,6 +18,7 @@ class MainWindow(QMainWindow):
         # Window setup
         self.setWindowIcon(self.window_icon)
         self.toolbar = QToolBar('toolbar')
+        self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self.addToolBar(self.toolbar)
 
         # Setup menus

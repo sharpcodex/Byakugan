@@ -39,8 +39,38 @@
      <string>&amp;View</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu_Filter">
+    <property name="title">
+     <string>&amp;Search</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Create">
+    <property name="title">
+     <string>&amp;Create</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Settings">
+    <property name="title">
+     <string>&amp;Settings</string>
+    </property>
+   </widget>
    <addaction name="menu_File"/>
+   <addaction name="menu_Filter"/>
+   <addaction name="menu_Create"/>
    <addaction name="menu_View"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menu_Settings"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget">
