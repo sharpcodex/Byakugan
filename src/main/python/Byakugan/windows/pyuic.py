@@ -14,5 +14,5 @@ for filename in Path(os.getcwd()).glob('**/*.ui'):
             continue
 
     pyuic_cmd = 'pyuic5 {} -o {}'.format(ui_filename, py_filename)
-    print(pyuic_cmd)
     os.system(pyuic_cmd)
+    print(ui_filename)
