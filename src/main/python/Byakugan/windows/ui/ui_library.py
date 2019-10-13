@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\workspace\Byakugan\Byakugan\src\main\python\Byakugan\windows\library\ui_library.ui'
+# Form implementation generated from reading ui file 'E:\workspace\Byakugan\Byakugan\src\main\python\Byakugan\windows\ui\ui_library.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LibraryManagerWindow(object):
     def setupUi(self, LibraryManagerWindow):
         LibraryManagerWindow.setObjectName("LibraryManagerWindow")
-        LibraryManagerWindow.resize(555, 320)
+        LibraryManagerWindow.resize(555, 344)
         self.gridLayout = QtWidgets.QGridLayout(LibraryManagerWindow)
         self.gridLayout.setObjectName("gridLayout")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()

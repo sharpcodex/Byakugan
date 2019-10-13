@@ -5,7 +5,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QToolBar, QAction
 from fbs_runtime.application_context import cached_property
 
-from windows.ui_main import Ui_MainWindow
+from windows.ui.ui_main import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
