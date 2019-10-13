@@ -1,32 +1,29 @@
+from fbs_runtime.application_context import cached_property
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QToolBar, QAction
 import qtawesome as qta
-from fbs_runtime.application_context import cached_property
 
 from windows.ui.ui_main import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self, app, *args, **kwargs):
+    def __init__(self, app_manager, *args, **kwargs):
         # class init
-        self.app = app
+        self.app_manager = app_manager
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load Ui
         self.setupUi(self)
         self.installEventFilter(QWindowEventFilter(self))
-        # Window setup
-        self.setWindowTitle(self.app.config.app_name)
-        self.setWindowIcon(self.window_icon)
+        # Setup window
+        self.setWindowTitle(self.app_manager.config.app_name)
+        self.setWindowIcon(self.app_manager.theme.window_icon)
         self.toolbar = QToolBar('toolbar')
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self.addToolBar(self.toolbar)
-
         # Setup menus
         self.menu_File.addAction(self.exit_action)
         self.menu_View.addAction(self.full_screen_action)
-
         # Setup toolbar
         self.toolbar.addAction(self.full_screen_action)
 
@@ -37,12 +34,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         exit_action = QAction(qta.icon('mdi.exit-to-app'), "&Exit", self)
         exit_action.setToolTip("Exit")
         exit_action.setStatusTip("Exit")
-        exit_action.triggered.connect(self.exit_action_triggered)
+        exit_action.triggered.connect(self.app_manager.quit)
         return exit_action
-
-    @staticmethod
-    def exit_action_triggered():
-        QtCore.QCoreApplication.instance().quit()
 
     @cached_property
     def full_screen_action(self):
@@ -67,10 +60,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
-
-    @cached_property
-    def window_icon(self):
-        return QIcon(self.app.ctx.get_resource('images/main.png'))
 
 
 class QWindowEventFilter(QtCore.QObject):
