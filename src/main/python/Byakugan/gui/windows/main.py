@@ -1,5 +1,5 @@
 from fbs_runtime.application_context import cached_property
-from qtpy.QtCore import Qt, QEvent, QObject
+from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QMainWindow, QToolBar, QAction
 import qtawesome as qta
 
@@ -14,7 +14,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load Ui
         self.setupUi(self)
-        self.installEventFilter(QWindowEventFilter(self))
         # Setup window
         self.setWindowTitle(self.app.config.app_name)
         self.setWindowIcon(self.theme.window_icon)
@@ -39,7 +38,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @cached_property
     def full_screen_action(self):
-        full_screen_action = QAction(qta.icon('fa5s.expand'), "Full Screen", self)
+        full_screen_action = QAction(self.theme.expand_icon, "Full Screen", self)
         full_screen_action.setToolTip("Show in full screen mode")
         full_screen_action.setStatusTip("Show in full screen mode")
         full_screen_action.triggered.connect(self.full_screen_action_triggered)
@@ -50,26 +49,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("Show in full screen mode")
 
     # Helpers
-    @staticmethod
-    def on_window_activation():
-        print("on_window_activation")
-
-    @staticmethod
-    def on_window_deactivation():
-        print("on_window_deactivation")
-
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
-
-
-class QWindowEventFilter(QObject):
-    def __init__(self, parent=None):
-        QObject.__init__(self, parent)
-
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.ActivationChange:
-            if self.parent().isActiveWindow():
-                self.parent().on_window_activation()
-            else:
-                self.parent().on_window_deactivation()
-        return QObject.eventFilter(self, obj, event)

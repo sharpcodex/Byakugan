@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\workspace\Byakugan\Byakugan\src\main\python\Byakugan\windows\ui\ui_main.ui'
+# Form implementation generated from reading ui file 'E:\workspace\Byakugan\Byakugan\src\main\python\Byakugan\gui\windows\ui\ui_main.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -44,6 +44,7 @@ class Ui_MainWindow(object):
         self.dockWidget = QtWidgets.QDockWidget(MainWindow)
         self.dockWidget.setFloating(False)
         self.dockWidget.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        self.dockWidget.setWindowTitle("")
         self.dockWidget.setObjectName("dockWidget")
         self.dockWidgetContents = QtWidgets.QWidget()
         self.dockWidgetContents.setObjectName("dockWidgetContents")
@@ -99,7 +100,6 @@ class Ui_MainWindow(object):
         self.menu_Tools.setTitle(_translate("MainWindow", "&Tools"))
         self.menu_Help.setTitle(_translate("MainWindow", "&Help"))
         self.menu_Settings.setTitle(_translate("MainWindow", "&Settings"))
-        self.dockWidget.setWindowTitle(_translate("MainWindow", "Filters"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Folders"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Labels"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Dates"))

@@ -2,4 +2,3 @@ fbs
 qtpy
 PyQt5
 qtawesome
-qtmodern

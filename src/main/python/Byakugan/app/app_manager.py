@@ -1,3 +1,5 @@
+from fbs_runtime.application_context import cached_property
+import qtpy
 from qtpy.QtCore import QCoreApplication
 
 from app.config_manager import ConfigManager
@@ -22,3 +24,7 @@ class AppManager:
 
     def dispose(self):
         self.config.dispose()
+
+    @cached_property
+    def qt_version(self):
+        return tuple(int(v) for v in qtpy.QT_VERSION.split('.'))

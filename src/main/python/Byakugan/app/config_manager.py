@@ -18,5 +18,9 @@ class ConfigManager:
     def app_theme(self):
         return self.get_single_value('app_theme')
 
+    @cached_property
+    def app_color(self):
+        return self.get_single_value('app_color')
+
     def dispose(self):
         self.db_repository.dispose()
