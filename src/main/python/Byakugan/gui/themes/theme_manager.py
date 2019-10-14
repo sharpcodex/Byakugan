@@ -9,6 +9,7 @@ class ThemeManager:
     def __init__(self, app_manager):
         self.app = app_manager
 
+    # Style
     def setup(self, window):
         if self.app.config.app_theme == 'modern-dark':
             self.apply_dark_theme()
@@ -100,6 +101,34 @@ class ThemeManager:
         with open(self.app.get_resource('themes/{}'.format(sheet))) as stylesheet:
             return stylesheet.read()
 
+    # Geometry
+    @cached_property
+    def screen_width(self):
+        screen_resolution = self.app.ctx.app.desktop().screenGeometry()
+        return screen_resolution.width()
+
+    @cached_property
+    def screen_height(self):
+        screen_resolution = self.app.ctx.app.desktop().screenGeometry()
+        return screen_resolution.height()
+
+    @cached_property
+    def window_height(self):
+        return self.screen_height * 0.8
+
+    @cached_property
+    def max_window_height(self):
+        return self.screen_height * 0.9
+
+    @cached_property
+    def window_width(self):
+        return self.screen_width * 0.5
+
+    @cached_property
+    def max_window_width(self):
+        return self.screen_width * 0.95
+
+    # Icons
     @cached_property
     def exit_icon(self):
         return qta.icon('mdi.exit-to-app', color=self.icon_color, color_active=self.active_icon_color)
@@ -112,6 +141,7 @@ class ThemeManager:
     def window_icon(self):
         return QIcon(self.app.get_resource('images/main.png'))
 
+    # Colors
     @cached_property
     def icon_color(self):
         if self.app.config.app_color == 'green':

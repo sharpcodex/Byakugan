@@ -1,5 +1,5 @@
 from qtpy.QtCore import Qt
-from qtpy.QtWidgets import QMainWindow, QToolBar
+from qtpy.QtWidgets import QMainWindow, QToolBar, QDesktopWidget, QSizePolicy
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
@@ -21,18 +21,22 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.setWindowTitle(self.app.config.app_name)
         self.setWindowIcon(self.theme.window_icon)
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        self.label.setScaledContents(True)
+        self.resize(self.theme.window_width, self.theme.window_height)
+        self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.label.setAlignment(Qt.AlignCenter)
+        # self.label.setScaledContents(True)
         # Setup actions
         self.actions.full_screen_action.triggered.connect(self.full_screen_action_triggered)
         self.actions.exit_action.triggered.connect(self.app.quit)
         # Setup toolbar
         self.toolbar.addAction(self.actions.full_screen_action)
         self.toolbar.addAction(self.actions.exit_action)
-        # Setup config
-        self.width = self.width()
-        self.height = self.height()
         # Show first image
         self.show_image(self.images_list.get_next())
+        qt_rectangle = self.frameGeometry()
+        center_point = QDesktopWidget().availableGeometry().center()
+        qt_rectangle.moveCenter(center_point)
+        self.move(qt_rectangle.topLeft())
 
     # Actions
     @staticmethod
@@ -40,7 +44,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         print("Show in full screen mode")
 
     def show_image(self, vimage):
-        pixmap = vimage.pixmap.scaled(self.width, self.height, Qt.KeepAspectRatio, Qt.FastTransformation)
+        pixmap = vimage.pixmap
+        target_width = self.width() if pixmap.width() > self.width() else pixmap.width()
+        target_height = self.height() if pixmap.height() > self.height() else pixmap.height()
+        pixmap = pixmap.scaled(target_width, target_height, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.label.setPixmap(pixmap)
 
     # Helpers
