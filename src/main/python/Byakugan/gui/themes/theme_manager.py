@@ -101,11 +101,12 @@ class ThemeManager:
             return stylesheet.read()
 
     @cached_property
+    def exit_icon(self):
+        return qta.icon('mdi.exit-to-app', color=self.icon_color, color_active=self.active_icon_color)
+
+    @cached_property
     def expand_icon(self):
-        return qta.icon('fa5s.expand',
-                        active='fa5s.expand',
-                        color=self.icon_color,
-                        color_active=self.active_icon_color)
+        return qta.icon('fa5s.expand', color=self.icon_color, color_active=self.active_icon_color)
 
     @cached_property
     def window_icon(self):
