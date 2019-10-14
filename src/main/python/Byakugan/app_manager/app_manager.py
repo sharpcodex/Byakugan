@@ -1,4 +1,4 @@
-from PyQt5 import QtCore
+from qtpy.QtCore import QCoreApplication
 
 from app_manager.config_manager import ConfigManager
 from app_manager.theme_manager import ThemeManager
@@ -20,7 +20,7 @@ class AppManager:
 
     def quit(self):
         self.dispose()
-        QtCore.QCoreApplication.instance().quit()
+        QCoreApplication.instance().quit()
 
     def dispose(self):
         self.config.dispose()

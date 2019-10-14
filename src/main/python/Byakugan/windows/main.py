@@ -1,7 +1,6 @@
 from fbs_runtime.application_context import cached_property
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QToolBar, QAction
+from qtpy.QtCore import Qt, QEvent, QObject
+from qtpy.QtWidgets import QMainWindow, QToolBar, QAction
 import qtawesome as qta
 
 from windows.ui.ui_main import Ui_MainWindow
@@ -62,14 +61,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.statusBar().showMessage(msg)
 
 
-class QWindowEventFilter(QtCore.QObject):
+class QWindowEventFilter(QObject):
     def __init__(self, parent=None):
-        QtCore.QObject.__init__(self, parent)
+        QObject.__init__(self, parent)
 
     def eventFilter(self, obj, event):
-        if event.type() == QtCore.QEvent.ActivationChange:
+        if event.type() == QEvent.ActivationChange:
             if self.parent().isActiveWindow():
                 self.parent().on_window_activation()
             else:
                 self.parent().on_window_deactivation()
-        return QtCore.QObject.eventFilter(self, obj, event)
+        return QObject.eventFilter(self, obj, event)

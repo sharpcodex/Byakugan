@@ -1,5 +1,5 @@
 from fbs_runtime.application_context import cached_property
-from PyQt5.QtGui import QIcon
+from qtpy.QtGui import QIcon
 import qtmodern.styles
 import qtmodern.windows
 
