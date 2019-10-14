@@ -3,20 +3,21 @@ from qtpy.QtCore import Qt, QEvent, QObject
 from qtpy.QtWidgets import QMainWindow, QToolBar, QAction
 import qtawesome as qta
 
-from windows.ui.ui_main import Ui_MainWindow
+from gui.windows.ui.ui_main import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self, app_manager, *args, **kwargs):
+    def __init__(self, app_manager, theme_manager, *args, **kwargs):
         # class init
-        self.app_manager = app_manager
+        self.app = app_manager
+        self.theme = theme_manager
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load Ui
         self.setupUi(self)
         self.installEventFilter(QWindowEventFilter(self))
         # Setup window
-        self.setWindowTitle(self.app_manager.config.app_name)
-        self.setWindowIcon(self.app_manager.theme.window_icon)
+        self.setWindowTitle(self.app.config.app_name)
+        self.setWindowIcon(self.theme.window_icon)
         self.toolbar = QToolBar('toolbar')
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self.addToolBar(self.toolbar)
@@ -33,7 +34,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         exit_action = QAction(qta.icon('mdi.exit-to-app'), "&Exit", self)
         exit_action.setToolTip("Exit")
         exit_action.setStatusTip("Exit")
-        exit_action.triggered.connect(self.app_manager.quit)
+        exit_action.triggered.connect(self.app.quit)
         return exit_action
 
     @cached_property

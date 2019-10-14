@@ -1,14 +1,12 @@
 from qtpy.QtCore import QCoreApplication
 
-from app_manager.config_manager import ConfigManager
-from app_manager.theme_manager import ThemeManager
+from app.config_manager import ConfigManager
 
 
 class AppManager:
     def __init__(self, ctx):
         self.ctx = ctx
         self.config = ConfigManager(self.ctx.get_resource('dbs/config.db'))
-        self.theme = ThemeManager(self.ctx, self.config.app_theme)
 
     def get_resource(self, path):
         return self.ctx.get_resource(path)
