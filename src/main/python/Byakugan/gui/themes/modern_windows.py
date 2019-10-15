@@ -3,6 +3,7 @@ from qtpy.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QToolButton,
                             QLabel, QSizePolicy)
 
 
+# noinspection PyPep8Naming
 class ModernWindow(QWidget):
     def __init__(self, window, app_manager, parent=None):
         QWidget.__init__(self, parent)
@@ -140,6 +141,7 @@ class ModernWindow(QWidget):
             self.on_btnRestore_clicked()
 
 
+# noinspection PyUnresolvedReferences
 class WindowDragger(QWidget):
     doubleClicked = Signal()
 

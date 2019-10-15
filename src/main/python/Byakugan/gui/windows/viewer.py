@@ -6,7 +6,7 @@ from gui.windows.ui.ui_viewer import Ui_ViewerWindow
 
 
 class ViewerWindow(QMainWindow, Ui_ViewerWindow):
-    def __init__(self, app_manager,images_list, *args, **kwargs):
+    def __init__(self, app_manager, images_list, *args, **kwargs):
         # class init
         super(ViewerWindow, self).__init__(*args, **kwargs)
         self.app = app_manager
