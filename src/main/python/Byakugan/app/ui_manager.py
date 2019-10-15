@@ -26,11 +26,11 @@ class UiManager:
     # Theme
     @cached_property
     def app_theme(self):
-        return self.settings.getValue('app_theme', DEFAULT_APP_THEME, str)
+        return self.settings.get('app_theme', DEFAULT_APP_THEME, str)
 
     @cached_property
     def app_color(self):
-        return self.settings.getValue('app_color', DEFAULT_APP_COLOR, str)
+        return self.settings.get('app_color', DEFAULT_APP_COLOR, str)
 
     @cached_property
     def icon_color(self):

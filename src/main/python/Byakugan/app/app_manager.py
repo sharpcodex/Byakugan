@@ -20,7 +20,7 @@ class AppManager:
 
     @cached_property
     def app_name(self):
-        return self.settings.getValue('app_name', APPLICATION_NAME, str)
+        return self.settings.get('app_name', APPLICATION_NAME, str)
 
     @cached_property
     def qt_version(self):
