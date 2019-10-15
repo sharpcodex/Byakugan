@@ -31,6 +31,18 @@ class WindowActions:
         return action
 
     @cached_property
+    def rotate(self):
+        action = QAction(self.app.ui.rotate_icon, "&Rotate")
+        action.setToolTip("Rotate clockwise")
+        return action
+
+    @cached_property
+    def flip(self):
+        action = QAction(self.app.ui.flip_icon, "F&lip")
+        action.setToolTip("Flip horizontally")
+        return action
+
+    @cached_property
     def reload(self):
         action = QAction(self.app.ui.reload_icon, "&Reload")
         action.setToolTip("Reload from disk")

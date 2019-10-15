@@ -31,6 +31,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.fullscreen.triggered.connect(self.full_screen_action_triggered)
         self.actions.slideshow.triggered.connect(self.full_screen_action_triggered)
         # --
+        self.actions.rotate.triggered.connect(self.full_screen_action_triggered)
+        self.actions.flip.triggered.connect(self.full_screen_action_triggered)
+        # --
         self.actions.reload.triggered.connect(self.app.quit)
         self.actions.exit.triggered.connect(self.app.quit)
         # Setup toolbar
@@ -38,7 +41,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.next)
         self.toolbar.addAction(self.actions.fullscreen)
         self.toolbar.addAction(self.actions.slideshow)
-
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.actions.rotate)
+        self.toolbar.addAction(self.actions.flip)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.actions.reload)
         self.toolbar.addAction(self.actions.exit)

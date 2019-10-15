@@ -29,6 +29,14 @@ class UiManager:
         return qta.icon('mdi.chart-line-stacked', color=self.color, color_active=self.active_color)
 
     @cached_property
+    def rotate_icon(self):
+        return qta.icon('mdi.axis-x-rotate-clockwise', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def flip_icon(self):
+        return qta.icon('mdi.axis-z-rotate-counterclockwise', color=self.color, color_active=self.active_color)
+
+    @cached_property
     def reload_icon(self):
         return qta.icon('mdi.database-refresh', color=self.color, color_active=self.active_color)
 
