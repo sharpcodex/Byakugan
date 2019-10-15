@@ -4,9 +4,10 @@ from qtpy.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QToolButton,
 
 
 class ModernWindow(QWidget):
-    def __init__(self, window, parent=None):
+    def __init__(self, window, app_manager, parent=None):
         QWidget.__init__(self, parent)
 
+        self.app = app_manager
         self._window = window
         self.vboxWindow = QVBoxLayout(self)
         self.windowFrame = QWidget(self)
@@ -89,7 +90,8 @@ class ModernWindow(QWidget):
             self.setAttribute(Qt.WA_TranslucentBackground)
 
         # set stylesheet
-        self.setStyleSheet(self._window.theme.get_stylesheet('frameless.qss'))
+        stylesheet = self.app.ui.get_stylesheet('frameless.qss')
+        self.setStyleSheet(stylesheet)
 
         # automatically connect slots
         QMetaObject.connectSlotsByName(self)

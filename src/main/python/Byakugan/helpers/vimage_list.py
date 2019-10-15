@@ -8,7 +8,7 @@ class VImage:
         self.pixmap = pixmap
 
 
-class ImagesList:
+class VImageList:
     def __init__(self, images_files_list):
         images_list = []
         for image_file in images_files_list:

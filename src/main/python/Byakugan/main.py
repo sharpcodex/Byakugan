@@ -4,16 +4,18 @@ from pathlib import Path
 
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
+from app.settings_manager import SettingsManager
+from app.ui_manager import UiManager
 from app.app_manager import AppManager
 from gui.themes.theme_manager import ThemeManager
-from gui.windows.main import MainWindow
-from gui.windows.viewer import ViewerWindow
-from helpers.images_list import ImagesList
 
 TEST_VIEWER = True
 
 if __name__ == '__main__':
-    app_manager = AppManager(ApplicationContext())
+    ctx = ApplicationContext()
+    settings_manager = SettingsManager()
+    ui_manager = UiManager(ctx, settings_manager)
+    app_manager = AppManager(ctx, settings_manager, ui_manager)
     theme_manager = ThemeManager(app_manager)
 
     if len(sys.argv) > 1:
@@ -24,12 +26,14 @@ if __name__ == '__main__':
         target_image = ''
 
     if os.path.isfile(target_image):
-        window = ViewerWindow(app_manager, theme_manager, ImagesList([target_image]))
+        from gui.windows.viewer import ViewerWindow
+        from helpers.vimage_list import VImageList
+
+        window = ViewerWindow(app_manager, VImageList([target_image]))
     else:
-        window = MainWindow(app_manager, theme_manager)
+        from gui.windows.main import MainWindow
 
-    themed_window = theme_manager.setup(window)
-    themed_window.show()
+        window = MainWindow(app_manager)
 
-    exit_code = app_manager.exec()
-    sys.exit(exit_code)
+    theme_manager.setup(window).show()
+    sys.exit(ctx.app.exec_())

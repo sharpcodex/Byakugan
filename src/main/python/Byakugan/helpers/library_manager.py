@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class DbRepository:
+class LibraryManager:
     def __init__(self, db_filename):
         self.conn = sqlite3.connect(db_filename)
         self.cur = self.conn.cursor()

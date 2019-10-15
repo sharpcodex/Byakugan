@@ -1,6 +1,5 @@
-from fbs_runtime.application_context import cached_property
-from qtpy.QtGui import QPalette, QColor, QIcon
-import qtawesome as qta
+from qtpy.QtCore import QSettings
+from qtpy.QtGui import QPalette, QColor
 
 from gui.themes.modern_windows import ModernWindow
 
@@ -11,12 +10,13 @@ class ThemeManager:
 
     # Style
     def setup(self, window):
-        if self.app.config.app_theme == 'modern-dark':
+        app_theme = QSettings().value('app_theme', 'modern-dark', type=str)
+        if app_theme == 'modern-dark':
             self.apply_dark_theme()
-            return ModernWindow(window)
-        elif self.app.config.app_theme == 'modern-light':
+            return ModernWindow(window, self.app)
+        elif app_theme == 'modern-light':
             self.apply_light_theme()
-            return ModernWindow(window)
+            return ModernWindow(window, self.app)
         else:
             return window
 
@@ -95,77 +95,4 @@ class ThemeManager:
             self.app.ctx.app.setStyle('plastique')
         else:
             self.app.ctx.app.setStyle('Fusion')
-        self.app.ctx.app.setStyleSheet(self.get_stylesheet('style.qss'))
-
-    def get_stylesheet(self, sheet):
-        with open(self.app.get_resource('themes/{}'.format(sheet))) as stylesheet:
-            return stylesheet.read()
-
-    # Geometry
-    @cached_property
-    def screen_width(self):
-        screen_resolution = self.app.ctx.app.desktop().screenGeometry()
-        return screen_resolution.width()
-
-    @cached_property
-    def screen_height(self):
-        screen_resolution = self.app.ctx.app.desktop().screenGeometry()
-        return screen_resolution.height()
-
-    @cached_property
-    def window_height(self):
-        return self.screen_height * 0.8
-
-    @cached_property
-    def max_window_height(self):
-        return self.screen_height * 0.9
-
-    @cached_property
-    def window_width(self):
-        return self.screen_width * 0.5
-
-    @cached_property
-    def max_window_width(self):
-        return self.screen_width * 0.95
-
-    # Icons
-    @cached_property
-    def exit_icon(self):
-        return qta.icon('mdi.exit-to-app', color=self.icon_color, color_active=self.active_icon_color)
-
-    @cached_property
-    def expand_icon(self):
-        return qta.icon('fa5s.expand', color=self.icon_color, color_active=self.active_icon_color)
-
-    @cached_property
-    def window_icon(self):
-        return QIcon(self.app.get_resource('images/main.png'))
-
-    # Colors
-    @cached_property
-    def icon_color(self):
-        if self.app.config.app_color == 'green':
-            return QColor.fromHsv(123, 204, 198, 255)
-        elif self.app.config.app_color == 'red':
-            return QColor.fromHsv(0, 182, 252, 255)
-        elif self.app.config.app_color == 'yellow':
-            return QColor.fromHsv(38, 218, 253, 255)
-        else:
-            if self.app.config.app_theme == 'modern-dark':
-                return QColor.fromHsv(0, 0, 255, 150)
-            else:
-                return QColor.fromHsv(0, 0, 0, 180)
-
-    @cached_property
-    def active_icon_color(self):
-        if self.app.config.app_color == 'green':
-            return QColor.fromHsv(123, 204, 148, 255)
-        elif self.app.config.app_color == 'red':
-            return QColor.fromHsv(0, 182, 202, 255)
-        elif self.app.config.app_color == 'yellow':
-            return QColor.fromHsv(38, 218, 203, 255)
-        else:
-            if self.app.config.app_theme == 'modern-dark':
-                return QColor.fromHsv(0, 0, 255, 100)
-            else:
-                return QColor.fromHsv(0, 0, 0, 150)
+        self.app.ctx.app.setStyleSheet(self.app.ui.get_stylesheet('style.qss'))

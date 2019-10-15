@@ -6,22 +6,21 @@ from gui.windows.ui.ui_viewer import Ui_ViewerWindow
 
 
 class ViewerWindow(QMainWindow, Ui_ViewerWindow):
-    def __init__(self, app_manager, theme_manager, images_list, *args, **kwargs):
+    def __init__(self, app_manager,images_list, *args, **kwargs):
         # class init
         super(ViewerWindow, self).__init__(*args, **kwargs)
         self.app = app_manager
-        self.theme = theme_manager
         self.images_list = images_list
         # Setup Ui
         self.setupUi(self)
-        self.actions = WindowActions(self.theme)
+        self.actions = WindowActions(self.app)
         self.toolbar = QToolBar('toolbar')
         self.addToolBar(self.toolbar)
         # Setup Ui
-        self.setWindowTitle(self.app.config.app_name)
-        self.setWindowIcon(self.theme.window_icon)
+        self.setWindowTitle(self.app.app_name)
+        self.setWindowIcon(self.app.ui.window_icon)
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        self.resize(self.theme.window_width, self.theme.window_height)
+        self.resize(self.app.ui.window_width, self.app.ui.window_height)
         self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.label.setAlignment(Qt.AlignCenter)
         # self.label.setScaledContents(True)

@@ -6,19 +6,18 @@ from gui.windows.ui.ui_main import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self, app_manager, theme_manager, *args, **kwargs):
+    def __init__(self, app_manager, *args, **kwargs):
         # class init
         super(MainWindow, self).__init__(*args, **kwargs)
         self.app = app_manager
-        self.theme = theme_manager
         # Setup Ui
         self.setupUi(self)
-        self.actions = WindowActions(self.theme)
+        self.actions = WindowActions(self.app)
         self.toolbar = QToolBar('toolbar')
         self.addToolBar(self.toolbar)
         # Setup Ui
-        self.setWindowTitle(self.app.config.app_name)
-        self.setWindowIcon(self.theme.window_icon)
+        self.setWindowTitle(self.app.app_name)
+        self.setWindowIcon(self.app.ui.window_icon)
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         # Setup actions
         self.actions.full_screen_action.triggered.connect(self.full_screen_action_triggered)
