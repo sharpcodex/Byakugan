@@ -30,4 +30,5 @@ class SettingsManager:
             self.settings.setValue('app_theme', DEFAULT_APP_THEME)  # modern-dark, modern-light or classic
             self.settings.setValue('app_color', DEFAULT_APP_COLOR)  # green, red, yellow or classic
         except (QSettings.AccessError, QSettings.FormatError):
-            pass  # TODO: handle exceptions
+            from qtpy.QtWidgets import QMessageBox
+            QMessageBox.critical(self, 'Fatal Error', 'Fatal Error')
