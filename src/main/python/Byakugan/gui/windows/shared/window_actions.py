@@ -7,15 +7,37 @@ class WindowActions:
         self.app = app_manager
 
     @cached_property
-    def full_screen_action(self):
-        full_screen_action = QAction(self.app.ui.expand_icon, "Full Screen")
-        full_screen_action.setToolTip("Show in full screen mode")
-        full_screen_action.setStatusTip("Show in full screen mode")
-        return full_screen_action
+    def next(self):
+        action = QAction(self.app.ui.next_icon, "&Next")
+        action.setToolTip("View next")
+        return action
 
     @cached_property
-    def exit_action(self):
-        exit_action = QAction(self.app.ui.exit_icon, "&Exit")
-        exit_action.setToolTip("Exit")
-        exit_action.setStatusTip("Exit")
-        return exit_action
+    def previous(self):
+        action = QAction(self.app.ui.previous_icon, "&Previous")
+        action.setToolTip("View previous")
+        return action
+
+    @cached_property
+    def fullscreen(self):
+        action = QAction(self.app.ui.fullscreen_icon, "&Full Screen")
+        action.setToolTip("Show in fullscreen")
+        return action
+
+    @cached_property
+    def slideshow(self):
+        action = QAction(self.app.ui.slideshow_icon, "&Slide Show")
+        action.setToolTip("Play slideshow")
+        return action
+
+    @cached_property
+    def reload(self):
+        action = QAction(self.app.ui.reload_icon, "&Reload")
+        action.setToolTip("Reload from disk")
+        return action
+
+    @cached_property
+    def exit(self):
+        action = QAction(self.app.ui.exit_icon, "E&xit")
+        action.setToolTip("Exit")
+        return action

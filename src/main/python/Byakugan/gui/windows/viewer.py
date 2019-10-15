@@ -19,17 +19,29 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         # Setup Ui
         self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
-        self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        # self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self.resize(self.app.ui.window_width, self.app.ui.window_height)
         self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.label.setAlignment(Qt.AlignCenter)
         # self.label.setScaledContents(True)
+
         # Setup actions
-        self.actions.full_screen_action.triggered.connect(self.full_screen_action_triggered)
-        self.actions.exit_action.triggered.connect(self.app.quit)
+        self.actions.previous.triggered.connect(self.app.quit)
+        self.actions.next.triggered.connect(self.app.quit)
+        self.actions.fullscreen.triggered.connect(self.full_screen_action_triggered)
+        self.actions.slideshow.triggered.connect(self.full_screen_action_triggered)
+        # --
+        self.actions.reload.triggered.connect(self.app.quit)
+        self.actions.exit.triggered.connect(self.app.quit)
         # Setup toolbar
-        self.toolbar.addAction(self.actions.full_screen_action)
-        self.toolbar.addAction(self.actions.exit_action)
+        self.toolbar.addAction(self.actions.previous)
+        self.toolbar.addAction(self.actions.next)
+        self.toolbar.addAction(self.actions.fullscreen)
+        self.toolbar.addAction(self.actions.slideshow)
+
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.actions.reload)
+        self.toolbar.addAction(self.actions.exit)
         # Show first image
         self.show_image(self.images_list.get_next())
         qt_rectangle = self.frameGeometry()

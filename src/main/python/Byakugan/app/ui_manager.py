@@ -11,13 +11,30 @@ class UiManager:
         self.settings = settings_manager
 
     # Icons
-    @cached_property
-    def exit_icon(self):
-        return qta.icon('mdi.exit-to-app', color=self.icon_color, color_active=self.active_icon_color)
 
     @cached_property
-    def expand_icon(self):
-        return qta.icon('fa5s.expand', color=self.icon_color, color_active=self.active_icon_color)
+    def next_icon(self):
+        return qta.icon('mdi.page-next', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def previous_icon(self):
+        return qta.icon('mdi.page-previous', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def fullscreen_icon(self):
+        return qta.icon('mdi.fit-to-page', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def slideshow_icon(self):
+        return qta.icon('mdi.chart-line-stacked', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def reload_icon(self):
+        return qta.icon('mdi.database-refresh', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def exit_icon(self):
+        return qta.icon('mdi.exit-to-app', color=self.color, color_active=self.active_color)
 
     @cached_property
     def window_icon(self):
@@ -33,7 +50,7 @@ class UiManager:
         return self.settings.get('app_color', DEFAULT_APP_COLOR, str)
 
     @cached_property
-    def icon_color(self):
+    def color(self):
         app_color = self.app_color
         if app_color == 'green':
             return QColor.fromHsv(123, 204, 198, 255)
@@ -48,7 +65,7 @@ class UiManager:
                 return QColor.fromHsv(0, 0, 0, 180)
 
     @cached_property
-    def active_icon_color(self):
+    def active_color(self):
         app_color = self.app_color
         if app_color == 'green':
             return QColor.fromHsv(123, 204, 148, 255)
