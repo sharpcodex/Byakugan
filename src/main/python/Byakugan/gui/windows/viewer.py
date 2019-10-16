@@ -20,7 +20,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.resize(self.app.ui.window_width, self.app.ui.window_height)
         self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
-
+        self.label.mouseDoubleClickEvent = self.label_double_click_event
         # Setup: actions
         self.actions = WindowActions(self.app)
 
@@ -40,11 +40,17 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.print.triggered.connect(self.print)
         self.actions.delete_item.triggered.connect(self.delete_item)
         self.actions.settings.triggered.connect(self.settings)
+        self.actions.minimize.triggered.connect(self.minimize)
+        self.actions.maximize.triggered.connect(self.maximize)
         self.actions.exit.triggered.connect(self.app.quit)
 
         # Setup: toolbar
         self.toolbar = QToolBar('toolbar')
         self.toolbar.setMovable(False)
+        self.toolbar.setContextMenuPolicy(Qt.NoContextMenu)
+        self.toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
+        self.setContextMenuPolicy(Qt.NoContextMenu)
+
         self.addToolBar(self.toolbar)
 
         self.toolbar.addAction(self.actions.previous)
@@ -64,8 +70,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.save_as)
         self.toolbar.addAction(self.actions.print)
         self.toolbar.addAction(self.actions.delete_item)
-        self.toolbar.addWidget(self.actions.separator)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(self.actions.settings)
+        self.toolbar.addWidget(self.actions.separator)
+        self.toolbar.addAction(self.actions.minimize)
+        self.toolbar.addAction(self.actions.maximize)
         self.toolbar.addAction(self.actions.exit)
 
         # Show first image
@@ -100,7 +109,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         print("scale")
 
     def fullscreen(self):
-        print("fullscreen")
+        if self.isFullScreen():
+            self.showNormal()
+        else:
+            self.showFullScreen()
 
     def slideshow(self):
         print("slideshow")
@@ -120,6 +132,15 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def settings(self):
         print("settings")
 
+    def minimize(self):
+        self.showMinimized()
+
+    def maximize(self):
+        if self.isMaximized():
+            self.showNormal()
+        else:
+            self.showMaximized()
+
     def show_image(self, vimage):
         pixmap = vimage.pixmap
         target_width = self.width() if pixmap.width() > self.width() else pixmap.width()
@@ -132,6 +153,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def label_double_click_event(self, event):
+        pass
+
+    def mouseDoubleClickEvent(self, event):
+        self.maximize()
 
     def mousePressEvent(self, event):
         self.old_pos = event.globalPos()

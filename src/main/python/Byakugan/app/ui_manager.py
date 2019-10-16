@@ -95,8 +95,26 @@ class UiManager:
         return qta.icon('mdi.settings', color=self.color, color_active=self.active_color)
 
     @cached_property
+    def minimize_icon(self):
+        return qta.icon('mdi.window-minimize', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def maximize_icon(self):
+        return qta.icon('mdi.window-maximize', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def restore_icon(self):
+        return qta.icon('mdi.window-restore', color=self.color, color_active=self.active_color)
+
+    @cached_property
     def exit_icon(self):
-        return qta.icon('mdi.exit-to-app', color=self.color, color_active=self.active_color)
+        return qta.icon('mdi.window-close', color=self.color, color_active=self.active_color)
+
+    def maximize_restore_icon(self, is_maximized):
+        if is_maximized:
+            return self.restore_icon
+        else:
+            return self.maximize_icon
 
     # --
 
@@ -122,11 +140,10 @@ class UiManager:
             return QColor.fromHsv(0, 182, 252, 255)
         elif app_color == 'yellow':
             return QColor.fromHsv(38, 218, 253, 255)
+        elif app_color == 'black':
+            return QColor.fromHsv(0, 0, 0, 180)
         else:
-            if self.app_theme == 'modern-dark':
-                return QColor.fromHsv(0, 0, 255, 150)
-            else:
-                return QColor.fromHsv(0, 0, 0, 180)
+            return QColor.fromHsv(0, 0, 255, 150)
 
     @cached_property
     def active_color(self):
@@ -137,11 +154,10 @@ class UiManager:
             return QColor.fromHsv(0, 182, 202, 255)
         elif app_color == 'yellow':
             return QColor.fromHsv(38, 218, 203, 255)
+        elif app_color == 'black':
+            return QColor.fromHsv(0, 0, 0, 150)
         else:
-            if self.app_theme == 'modern-dark':
-                return QColor.fromHsv(0, 0, 255, 100)
-            else:
-                return QColor.fromHsv(0, 0, 0, 150)
+            return QColor.fromHsv(0, 0, 255, 100)
 
     # -------------- Geometry -----------------------
 

@@ -9,7 +9,7 @@ QCoreApplication.setOrganizationDomain(ORGANIZATION_DOMAIN)
 QCoreApplication.setApplicationName(APPLICATION_NAME)
 
 settings = QSettings()
-settings.setValue('app_theme', 'classic')
+settings.setValue('app_color', 'black')
 
 
 

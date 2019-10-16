@@ -173,9 +173,23 @@ class WindowActions:
         return action
 
     @cached_property
+    def minimize(self):
+        action = QAction(self.app.ui.minimize_icon, "Minimize")
+        action.setToolTip("Minimize")
+        action.setStatusTip("Minimize")
+        return action
+
+    @cached_property
+    def maximize(self):
+        action = QAction(self.app.ui.maximize_icon, "Maximize")
+        action.setToolTip("Maximize")
+        action.setStatusTip("Maximize")
+        return action
+
+    @cached_property
     def exit(self):
         action = QAction(self.app.ui.exit_icon, "E&xit")
         action.setToolTip("Exit")
-        action.setToolTip("Exit")
+        action.setStatusTip("Exit")
         action.setShortcuts(["Escape"])
         return action
