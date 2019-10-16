@@ -1,5 +1,5 @@
-from qtpy.QtCore import Qt
-from qtpy.QtWidgets import QMainWindow, QToolBar, QSizePolicy
+from qtpy.QtCore import Qt, QPoint
+from qtpy.QtWidgets import QMainWindow, QToolBar, QDesktopWidget
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
@@ -9,25 +9,27 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def __init__(self, app_manager, images_list, *args, **kwargs):
         # class init
         super(ViewerWindow, self).__init__(*args, **kwargs)
+        self.setupUi(self)
         self.app = app_manager
         self.images_list = images_list
+        self.old_pos = self.pos()
 
-        # Setup Ui
-        self.setupUi(self)
-        self.actions = WindowActions(self.app)
-        self.toolbar = QToolBar('toolbar')
-        self.addToolBar(self.toolbar)
+        # Setup: window
         self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.statusBar().hide()
         self.resize(self.app.ui.window_width, self.app.ui.window_height)
-        self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        # Setup: image-label
         self.label.setAlignment(Qt.AlignCenter)
         self.label.setScaledContents(True)
 
-        # Setup actions
+        # Setup: actions
+        self.actions = WindowActions(self.app)
+
         self.actions.previous.triggered.connect(self.previous)
         self.actions.next.triggered.connect(self.next)
-        # --
         self.actions.zoomin.triggered.connect(self.zoomin)
         self.actions.zoomout.triggered.connect(self.zoomout)
         self.actions.rotate.triggered.connect(self.rotate)
@@ -38,14 +40,16 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.fullscreen.triggered.connect(self.fullscreen)
         self.actions.slideshow.triggered.connect(self.slideshow)
         self.actions.info.triggered.connect(self.info)
-        # --
         self.actions.save_as.triggered.connect(self.save_as)
         self.actions.print.triggered.connect(self.print)
         self.actions.delete_item.triggered.connect(self.delete_item)
-        # --
         self.actions.settings.triggered.connect(self.settings)
         self.actions.exit.triggered.connect(self.app.quit)
-        # Setup toolbar
+
+        # Setup: toolbar
+        self.toolbar = QToolBar('toolbar')
+        self.addToolBar(self.toolbar)
+
         self.toolbar.addAction(self.actions.previous)
         self.toolbar.addAction(self.actions.next)
         self.toolbar.addSeparator()
@@ -66,6 +70,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.settings)
         self.toolbar.addAction(self.actions.exit)
+
         # Show first image
         self.show_image(self.images_list.get_next())
 
@@ -124,6 +129,20 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         target_height = self.height() if pixmap.height() > self.height() else pixmap.height()
         pixmap = pixmap.scaled(target_width, target_height, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.label.setPixmap(pixmap)
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
+    def mousePressEvent(self, event):
+        self.old_pos = event.globalPos()
+
+    def mouseMoveEvent(self, event):
+        delta = QPoint(event.globalPos() - self.old_pos)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.old_pos = event.globalPos()
 
     # Helpers
     def bar_log(self, msg):
