@@ -1,5 +1,5 @@
 from qtpy.QtCore import Qt
-from qtpy.QtWidgets import QMainWindow, QToolBar, QDesktopWidget, QSizePolicy
+from qtpy.QtWidgets import QMainWindow, QToolBar, QSizePolicy
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
@@ -11,12 +11,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         super(ViewerWindow, self).__init__(*args, **kwargs)
         self.app = app_manager
         self.images_list = images_list
+
         # Setup Ui
         self.setupUi(self)
         self.actions = WindowActions(self.app)
         self.toolbar = QToolBar('toolbar')
         self.addToolBar(self.toolbar)
-        # Setup Ui
         self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
         # self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
@@ -26,38 +26,98 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         # self.label.setScaledContents(True)
 
         # Setup actions
-        self.actions.previous.triggered.connect(self.app.quit)
-        self.actions.next.triggered.connect(self.app.quit)
-        self.actions.fullscreen.triggered.connect(self.full_screen_action_triggered)
-        self.actions.slideshow.triggered.connect(self.full_screen_action_triggered)
+        self.actions.previous.triggered.connect(self.previous)
+        self.actions.next.triggered.connect(self.next)
         # --
-        self.actions.rotate.triggered.connect(self.full_screen_action_triggered)
-        self.actions.flip.triggered.connect(self.full_screen_action_triggered)
+        self.actions.zoomin.triggered.connect(self.zoomin)
+        self.actions.zoomout.triggered.connect(self.zoomout)
+        self.actions.rotate.triggered.connect(self.rotate)
+        self.actions.flip.triggered.connect(self.flip)
+        self.actions.scale_w.triggered.connect(self.scale_w)
+        self.actions.scale_h.triggered.connect(self.scale_h)
+        self.actions.scale.triggered.connect(self.scale)
+        self.actions.fullscreen.triggered.connect(self.fullscreen)
+        self.actions.slideshow.triggered.connect(self.slideshow)
+        self.actions.info.triggered.connect(self.info)
         # --
-        self.actions.reload.triggered.connect(self.app.quit)
+        self.actions.save_as.triggered.connect(self.save_as)
+        self.actions.print.triggered.connect(self.print)
+        self.actions.delete_item.triggered.connect(self.delete_item)
+        # --
+        self.actions.settings.triggered.connect(self.settings)
         self.actions.exit.triggered.connect(self.app.quit)
         # Setup toolbar
         self.toolbar.addAction(self.actions.previous)
         self.toolbar.addAction(self.actions.next)
-        self.toolbar.addAction(self.actions.fullscreen)
-        self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addSeparator()
+        self.toolbar.addAction(self.actions.zoomin)
+        self.toolbar.addAction(self.actions.zoomout)
         self.toolbar.addAction(self.actions.rotate)
         self.toolbar.addAction(self.actions.flip)
+        self.toolbar.addAction(self.actions.scale_w)
+        self.toolbar.addAction(self.actions.scale_h)
+        self.toolbar.addAction(self.actions.scale)
+        self.toolbar.addAction(self.actions.fullscreen)
+        self.toolbar.addAction(self.actions.slideshow)
+        self.toolbar.addAction(self.actions.info)
         self.toolbar.addSeparator()
-        self.toolbar.addAction(self.actions.reload)
+        self.toolbar.addAction(self.actions.save_as)
+        self.toolbar.addAction(self.actions.print)
+        self.toolbar.addAction(self.actions.delete_item)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.actions.settings)
         self.toolbar.addAction(self.actions.exit)
         # Show first image
         self.show_image(self.images_list.get_next())
-        qt_rectangle = self.frameGeometry()
-        center_point = QDesktopWidget().availableGeometry().center()
-        qt_rectangle.moveCenter(center_point)
-        self.move(qt_rectangle.topLeft())
 
     # Actions
-    @staticmethod
-    def full_screen_action_triggered():
-        print("Show in full screen mode")
+    def previous(self):
+        print("previous")
+
+    def next(self):
+        print("next")
+
+    def zoomin(self):
+        print("zoomin")
+
+    def zoomout(self):
+        print("zoomout")
+
+    def rotate(self):
+        print("rotate")
+
+    def flip(self):
+        print("flip")
+
+    def scale_w(self):
+        print("scale_w")
+
+    def scale_h(self):
+        print("scale_h")
+
+    def scale(self):
+        print("scale")
+
+    def fullscreen(self):
+        print("fullscreen")
+
+    def slideshow(self):
+        print("slideshow")
+
+    def info(self):
+        print("info")
+
+    def save_as(self):
+        print("save_as")
+
+    def print(self):
+        print("print")
+
+    def delete_item(self):
+        print("delete")
+
+    def settings(self):
+        print("settings")
 
     def show_image(self, vimage):
         pixmap = vimage.pixmap

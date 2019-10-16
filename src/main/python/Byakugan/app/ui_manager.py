@@ -10,23 +10,25 @@ class UiManager:
         self.ctx = app_ctx
         self.settings = settings_manager
 
-    # Icons
+    # -------------- Icons -----------------------
 
     @cached_property
     def next_icon(self):
-        return qta.icon('mdi.page-next', color=self.color, color_active=self.active_color)
+        return qta.icon('mdi.page-next-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def previous_icon(self):
-        return qta.icon('mdi.page-previous', color=self.color, color_active=self.active_color)
+        return qta.icon('mdi.page-previous-outline', color=self.color, color_active=self.active_color)
+
+    # --
 
     @cached_property
-    def fullscreen_icon(self):
-        return qta.icon('mdi.fit-to-page', color=self.color, color_active=self.active_color)
+    def zoom_in_icon(self):
+        return qta.icon('mdi.magnify-plus-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
-    def slideshow_icon(self):
-        return qta.icon('mdi.chart-line-stacked', color=self.color, color_active=self.active_color)
+    def zoom_out_icon(self):
+        return qta.icon('mdi.magnify-minus-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def rotate_icon(self):
@@ -37,18 +39,72 @@ class UiManager:
         return qta.icon('mdi.axis-z-rotate-counterclockwise', color=self.color, color_active=self.active_color)
 
     @cached_property
-    def reload_icon(self):
-        return qta.icon('mdi.database-refresh', color=self.color, color_active=self.active_color)
+    def scale_w_icon(self):
+        return qta.icon('mdi.arrow-expand-horizontal', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def scale_h_icon(self):
+        return qta.icon('mdi.arrow-expand-vertical', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def scale_icon(self):
+        return qta.icon('mdi.arrow-expand-all', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def fullscreen_icon(self):
+        return qta.icon('mdi.fit-to-page-outline', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def slideshow_icon(self):
+        return qta.icon('mdi.television-play', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def info_icon(self):
+        return qta.icon('mdi.information-outline', color=self.color, color_active=self.active_color)
+
+    # --
+
+    @cached_property
+    def new_icon(self):
+        return qta.icon('mdi.folder-plus', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def open_icon(self):
+        return qta.icon('mdi.folder-open', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def save_icon(self):
+        return qta.icon('mdi.content-save', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def save_as_icon(self):
+        return qta.icon('mdi.content-save-move', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def delete_icon(self):
+        return qta.icon('mdi.delete', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def print_icon(self):
+        return qta.icon('mdi.printer', color=self.color, color_active=self.active_color)
+
+    # --
+
+    @cached_property
+    def settings_icon(self):
+        return qta.icon('mdi.settings', color=self.color, color_active=self.active_color)
 
     @cached_property
     def exit_icon(self):
         return qta.icon('mdi.exit-to-app', color=self.color, color_active=self.active_color)
 
+    # --
+
     @cached_property
     def window_icon(self):
         return QIcon(self.ctx.get_resource('images/main.png'))
 
-    # Theme
+    # -------------- Theme -----------------------
     @cached_property
     def app_theme(self):
         return self.settings.get('app_theme', DEFAULT_APP_THEME, str)
@@ -87,7 +143,8 @@ class UiManager:
             else:
                 return QColor.fromHsv(0, 0, 0, 150)
 
-    # Geometry
+    # -------------- Geometry -----------------------
+
     @cached_property
     def screen_width(self):
         screen_resolution = self.ctx.app.desktop().screenGeometry()
