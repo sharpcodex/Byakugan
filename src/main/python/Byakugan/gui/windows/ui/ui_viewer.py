@@ -18,6 +18,7 @@ class Ui_ViewerWindow(object):
         self.gridLayout.setObjectName("gridLayout")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setText("")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         ViewerWindow.setCentralWidget(self.centralwidget)
@@ -26,6 +27,7 @@ class Ui_ViewerWindow(object):
         self.menubar.setObjectName("menubar")
         ViewerWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(ViewerWindow)
+        self.statusbar.setSizeGripEnabled(True)
         self.statusbar.setObjectName("statusbar")
         ViewerWindow.setStatusBar(self.statusbar)
 

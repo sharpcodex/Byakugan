@@ -18,11 +18,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.statusBar().hide()
         self.resize(self.app.ui.window_width, self.app.ui.window_height)
+        self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
+        # self.statusBar().hide()
 
         # Setup: image-label
-        self.label.setAlignment(Qt.AlignCenter)
+        # self.label.setAlignment(Qt.AlignCenter)
         self.label.setScaledContents(True)
 
         # Setup: actions
