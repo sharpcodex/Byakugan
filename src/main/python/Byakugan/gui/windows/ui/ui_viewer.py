@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\workspace\Byakugan\Byakugan\src\main\python\Byakugan\gui\windows\ui\ui_viewer.ui'
+# Form implementation generated from reading ui file 'D:\WorkSpace\myGithub\Byakugan\Byakugan\src\main\python\Byakugan\gui\windows\ui\ui_viewer.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -17,6 +17,7 @@ class Ui_ViewerWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
         self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.label.setText("")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")

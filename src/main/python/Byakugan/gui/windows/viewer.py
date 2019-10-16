@@ -13,6 +13,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.app = app_manager
         self.images_list = images_list
         self.old_pos = self.pos()
+        self.window_moving = False
 
         # Setup: window
         self.setWindowTitle(self.app.app_name)
@@ -50,7 +51,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.setContextMenuPolicy(Qt.NoContextMenu)
         self.toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
         self.setContextMenuPolicy(Qt.NoContextMenu)
-
         self.addToolBar(self.toolbar)
 
         self.toolbar.addAction(self.actions.previous)
@@ -66,16 +66,28 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.fullscreen)
         self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addAction(self.actions.info)
-        self.toolbar.addSeparator()
-        self.toolbar.addAction(self.actions.save_as)
-        self.toolbar.addAction(self.actions.print)
-        self.toolbar.addAction(self.actions.delete_item)
-        self.toolbar.addSeparator()
-        self.toolbar.addAction(self.actions.settings)
         self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.minimize)
         self.toolbar.addAction(self.actions.maximize)
         self.toolbar.addAction(self.actions.exit)
+
+        # Setup: label context menu
+        self.label.addAction(self.actions.previous)
+        self.label.addAction(self.actions.next)
+        self.label.addAction(self.actions.zoom_in)
+        self.label.addAction(self.actions.zoom_out)
+        self.label.addAction(self.actions.rotate)
+        self.label.addAction(self.actions.flip)
+        self.label.addAction(self.actions.scale_w)
+        self.label.addAction(self.actions.scale_h)
+        self.label.addAction(self.actions.scale)
+        self.label.addAction(self.actions.fullscreen)
+        self.label.addAction(self.actions.slideshow)
+        self.label.addAction(self.actions.info)
+        self.label.addAction(self.actions.save_as)
+        self.label.addAction(self.actions.print)
+        self.label.addAction(self.actions.delete_item)
+        self.label.addAction(self.actions.settings)
 
         # Show first image
         self.show_image(self.images_list.get_next())
@@ -161,16 +173,21 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.maximize()
 
     def mousePressEvent(self, event):
-        self.old_pos = event.globalPos()
+        if event.button() == Qt.LeftButton:
+            self.old_pos = event.globalPos()
+            self.window_moving = True
 
     def mouseReleaseEvent(self, event):
-        self.setWindowOpacity(1)
+        if event.button() == Qt.LeftButton:
+            self.setWindowOpacity(1)
+            self.window_moving = False
 
     def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPos() - self.old_pos)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.old_pos = event.globalPos()
-        self.setWindowOpacity(0.5)
+        if self.window_moving:
+            delta = QPoint(event.globalPos() - self.old_pos)
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.old_pos = event.globalPos()
+            self.setWindowOpacity(0.5)
 
     # Helpers
     def bar_log(self, msg):
