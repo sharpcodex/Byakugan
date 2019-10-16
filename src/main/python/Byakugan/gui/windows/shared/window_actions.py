@@ -1,11 +1,17 @@
 from fbs_runtime.application_context import cached_property
 from qtpy.QtCore import Qt
-from qtpy.QtWidgets import QAction
+from qtpy.QtWidgets import QAction, QSizePolicy, QWidget
 
 
 class WindowActions:
     def __init__(self, app_manager):
         self.app = app_manager
+
+    @cached_property
+    def separator(self):
+        separator = QWidget()
+        separator.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        return separator
 
     @cached_property
     def previous(self):

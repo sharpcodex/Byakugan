@@ -19,11 +19,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.addToolBar(self.toolbar)
         self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
-        # self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self.resize(self.app.ui.window_width, self.app.ui.window_height)
         self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.label.setAlignment(Qt.AlignCenter)
-        # self.label.setScaledContents(True)
+        self.label.setScaledContents(True)
 
         # Setup actions
         self.actions.previous.triggered.connect(self.previous)
@@ -64,7 +63,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.save_as)
         self.toolbar.addAction(self.actions.print)
         self.toolbar.addAction(self.actions.delete_item)
-        self.toolbar.addSeparator()
+        self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.settings)
         self.toolbar.addAction(self.actions.exit)
         # Show first image
