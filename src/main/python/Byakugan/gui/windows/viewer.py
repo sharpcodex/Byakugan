@@ -20,11 +20,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.resize(self.app.ui.window_width, self.app.ui.window_height)
         self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
-        # self.statusBar().hide()
-
-        # Setup: image-label
-        # self.label.setAlignment(Qt.AlignCenter)
-        self.label.setScaledContents(True)
 
         # Setup: actions
         self.actions = WindowActions(self.app)
@@ -141,10 +136,14 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def mousePressEvent(self, event):
         self.old_pos = event.globalPos()
 
+    def mouseReleaseEvent(self, event):
+        self.setWindowOpacity(1)
+
     def mouseMoveEvent(self, event):
         delta = QPoint(event.globalPos() - self.old_pos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.old_pos = event.globalPos()
+        self.setWindowOpacity(0.5)
 
     # Helpers
     def bar_log(self, msg):
