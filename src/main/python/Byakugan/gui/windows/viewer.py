@@ -31,8 +31,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         self.actions.previous.triggered.connect(self.previous)
         self.actions.next.triggered.connect(self.next)
-        self.actions.zoomin.triggered.connect(self.zoomin)
-        self.actions.zoomout.triggered.connect(self.zoomout)
+        self.actions.zoom_in.triggered.connect(self.zoomin)
+        self.actions.zoom_out.triggered.connect(self.zoomout)
         self.actions.rotate.triggered.connect(self.rotate)
         self.actions.flip.triggered.connect(self.flip)
         self.actions.scale_w.triggered.connect(self.scale_w)
@@ -49,13 +49,14 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         # Setup: toolbar
         self.toolbar = QToolBar('toolbar')
+        self.toolbar.setMovable(False)
         self.addToolBar(self.toolbar)
 
         self.toolbar.addAction(self.actions.previous)
         self.toolbar.addAction(self.actions.next)
         self.toolbar.addSeparator()
-        self.toolbar.addAction(self.actions.zoomin)
-        self.toolbar.addAction(self.actions.zoomout)
+        self.toolbar.addAction(self.actions.zoom_in)
+        self.toolbar.addAction(self.actions.zoom_out)
         self.toolbar.addAction(self.actions.rotate)
         self.toolbar.addAction(self.actions.flip)
         self.toolbar.addAction(self.actions.scale_w)

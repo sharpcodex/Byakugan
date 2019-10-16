@@ -33,7 +33,7 @@ class WindowActions:
     # --
 
     @cached_property
-    def zoomin(self):
+    def zoom_in(self):
         action = QAction(self.app.ui.zoom_in_icon, "Zoom in")
         action.setToolTip("Zoom In")
         action.setStatusTip("Zoom In")
@@ -41,7 +41,7 @@ class WindowActions:
         return action
 
     @cached_property
-    def zoomout(self):
+    def zoom_out(self):
         action = QAction(self.app.ui.zoom_out_icon, "Zoom out")
         action.setToolTip("Zoom Out")
         action.setStatusTip("Zoom Out")
