@@ -21,8 +21,6 @@ class UiManager:
     def previous_icon(self):
         return qta.icon('mdi.page-previous-outline', color=self.color, color_active=self.active_color)
 
-    # --
-
     @cached_property
     def zoom_in_icon(self):
         return qta.icon('mdi.magnify-plus-outline', color=self.color, color_active=self.active_color)
@@ -55,8 +53,6 @@ class UiManager:
     def info_icon(self):
         return qta.icon('mdi.information-outline', color=self.color, color_active=self.active_color)
 
-    # --
-
     @cached_property
     def new_icon(self):
         return qta.icon('mdi.folder-plus', color=self.color, color_active=self.active_color)
@@ -80,8 +76,6 @@ class UiManager:
     @cached_property
     def print_icon(self):
         return qta.icon('mdi.printer', color=self.color, color_active=self.active_color)
-
-    # --
 
     @cached_property
     def settings_icon(self):
@@ -112,8 +106,6 @@ class UiManager:
             return self.restore_icon
         else:
             return self.maximize_icon
-
-    # --
 
     @cached_property
     def window_icon(self):
@@ -173,12 +165,12 @@ class UiManager:
         return screen_resolution.height()
 
     @cached_property
-    def window_height(self):
-        return self.screen_height * WINDOW_HEIGHT_P
+    def best_window_width(self):
+        return self.screen_width * VUI_WINDOW_WIDTH_P
 
     @cached_property
-    def window_width(self):
-        return self.screen_width * WINDOW_WIDTH_P
+    def best_window_height(self):
+        return self.screen_height * VUI_WINDOW_HEIGHT_P
 
     # Helpers
 

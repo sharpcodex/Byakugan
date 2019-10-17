@@ -1,5 +1,5 @@
 from qtpy.QtCore import Qt, QPoint
-from qtpy.QtWidgets import QMainWindow, QToolBar, QDesktopWidget
+from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
@@ -18,7 +18,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
         self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
-        self._restoreGeometry()
 
         # Setup self
         self.old_pos = self.pos()
@@ -90,6 +89,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         # Show first image
         self.show_image(self.images_list.get_next())
+
+        # Restore last window state
+        self._restoreGeometry()
 
     # Actions
 
@@ -215,10 +217,26 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.app.settings.set('viewer_window_geometry', geometry)
 
     def _restoreGeometry(self):
-        last_geometry = self.app.settings.get_value('viewer_window_geometry', '')
-        try:
-            self.restoreGeometry(last_geometry)
-        except Exception:
-            frame_geometry = self.frameGeometry()
-            frame_geometry.moveCenter(self.app.ui.screen_center)
-            self.move(frame_geometry.topLeft())
+        show_status_bar = self.app.settings.get('vui_show_status_bar', False, bool)
+        load_geometry = self.app.settings.get('vui_save_window_geometry', False, bool)
+
+        self.statusbar.setVisible(show_status_bar)
+
+        if load_geometry:
+            last_geometry = self.app.settings.get_value('viewer_window_geometry', '')
+            try:
+                self.restoreGeometry(last_geometry)
+                if self.isMaximized():
+                    self._showMaximized()
+                else:
+                    self._showNormal()
+            except Exception:
+                self._center_window()
+            else:
+                self._center_window()
+
+    def _center_window(self):
+        self.resize(self.app.ui.best_window_width, self.app.ui.best_window_height)
+        frame_geometry = self.frameGeometry()
+        frame_geometry.moveCenter(self.app.ui.screen_center)
+        self.move(frame_geometry.topLeft())

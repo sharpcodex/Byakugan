@@ -44,6 +44,9 @@ class SettingsManager:
         # Theme
         self.settings.setValue('app_theme', DEFAULT_APP_THEME)  # modern-dark, modern-light or classic
         self.settings.setValue('app_color', DEFAULT_APP_COLOR)  # green, red, yellow or classic
+        # Viewer Window
+        self.settings.setValue('vui_show_status_bar', VUI_SHOW_STATUS_BAR)  # green, red, yellow or classic
+        self.settings.setValue('vui_save_window_geometry', VUI_SAVE_WINDOW_GEOMETRY)  # green, red, yellow or classic
 
     @staticmethod
     def error_box():
