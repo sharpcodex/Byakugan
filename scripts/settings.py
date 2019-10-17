@@ -10,7 +10,4 @@ QCoreApplication.setApplicationName(APPLICATION_NAME)
 
 settings = QSettings()
 settings.setValue('app_color', 'black')
-# settings.clear()
-
-
-
+settings.clear()

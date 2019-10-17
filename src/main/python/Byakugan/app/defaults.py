@@ -2,8 +2,8 @@
 ORGANIZATION_NAME = 'Thaka'
 ORGANIZATION_DOMAIN = 'Thaka.sd'
 APPLICATION_NAME = 'Byakugan'
-DEFAULT_APP_THEME = 'modern-dark'
-DEFAULT_APP_COLOR = 'green'
+DEFAULT_APP_THEME = 'classic'
+DEFAULT_APP_COLOR = 'black'
 
 # Viewer Window
 VUI_WINDOW_HEIGHT_P = 0.6

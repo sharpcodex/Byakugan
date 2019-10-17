@@ -20,13 +20,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(self.app.ui.window_icon)
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         # Setup actions
-        self.actions.fullscreen.triggered.connect(self.full_screen_action_triggered)
         self.actions.exit.triggered.connect(self.app.quit)
         # Setup menus
         self.menu_File.addAction(self.actions.exit)
-        self.menu_View.addAction(self.actions.fullscreen)
         # Setup toolbar
-        self.toolbar.addAction(self.actions.fullscreen)
         self.toolbar.addAction(self.actions.exit)
 
     # Actions
