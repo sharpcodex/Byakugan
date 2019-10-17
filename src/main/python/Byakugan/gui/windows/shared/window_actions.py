@@ -89,22 +89,6 @@ class WindowActions:
         return action
 
     @cached_property
-    def fullscreen(self):
-        action = QAction(self.app.ui.fullscreen_icon, "Full Screen")
-        action.setToolTip("Show in Fullscreen")
-        action.setStatusTip("Show in Fullscreen")
-        action.setShortcuts(["Alt+Return"])
-        return action
-
-    @cached_property
-    def slideshow(self):
-        action = QAction(self.app.ui.slideshow_icon, "Slide Show")
-        action.setToolTip("Play Slideshow")
-        action.setStatusTip("Play Slideshow")
-        action.setShortcuts(["F11"])
-        return action
-
-    @cached_property
     def info(self):
         action = QAction(self.app.ui.info_icon, "Information")
         action.setToolTip("Show Information Window")
@@ -170,6 +154,14 @@ class WindowActions:
         action.setToolTip("Show Setting Window")
         action.setToolTip("Show Setting Window")
         action.setShortcuts(["Ctrl+,"])
+        return action
+
+    @cached_property
+    def slideshow(self):
+        action = QAction(self.app.ui.slideshow_icon, "Slide Show")
+        action.setToolTip("Play Slideshow")
+        action.setStatusTip("Play Slideshow")
+        action.setShortcuts(["Alt+Return", "F11"])
         return action
 
     @cached_property

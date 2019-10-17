@@ -34,13 +34,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.scale_w.triggered.connect(self.scale_w)
         self.actions.scale_h.triggered.connect(self.scale_h)
         self.actions.scale.triggered.connect(self.scale)
-        self.actions.fullscreen.triggered.connect(self.fullscreen)
-        self.actions.slideshow.triggered.connect(self.slideshow)
         self.actions.info.triggered.connect(self.info)
         self.actions.save_as.triggered.connect(self.save_as)
         self.actions.print.triggered.connect(self.print)
         self.actions.delete_item.triggered.connect(self.delete_item)
         self.actions.settings.triggered.connect(self.settings)
+        self.actions.slideshow.triggered.connect(self.slideshow)
         self.actions.minimize.triggered.connect(self.minimize)
         self.actions.maximize.triggered.connect(self.maximize)
         self.actions.exit.triggered.connect(self.app.quit)
@@ -63,10 +62,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.scale_w)
         self.toolbar.addAction(self.actions.scale_h)
         self.toolbar.addAction(self.actions.scale)
-        self.toolbar.addAction(self.actions.fullscreen)
-        self.toolbar.addAction(self.actions.slideshow)
-        self.toolbar.addAction(self.actions.info)
         self.toolbar.addWidget(self.actions.separator)
+        self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addAction(self.actions.minimize)
         self.toolbar.addAction(self.actions.maximize)
         self.toolbar.addAction(self.actions.exit)
@@ -81,13 +78,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.scale_w)
         self.label.addAction(self.actions.scale_h)
         self.label.addAction(self.actions.scale)
-        self.label.addAction(self.actions.fullscreen)
-        self.label.addAction(self.actions.slideshow)
         self.label.addAction(self.actions.info)
         self.label.addAction(self.actions.save_as)
         self.label.addAction(self.actions.print)
         self.label.addAction(self.actions.delete_item)
         self.label.addAction(self.actions.settings)
+        self.label.addAction(self.actions.slideshow)
 
         # Show first image
         self.show_image(self.images_list.get_next())
@@ -120,14 +116,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def scale(self):
         print("scale")
 
-    def fullscreen(self):
-        if self.isFullScreen():
-            self.showNormal()
-        else:
-            self.showFullScreen()
-
     def slideshow(self):
-        print("slideshow")
+        if self.isFullScreen():
+            self._showNormal()
+        else:
+            self._showFullScreen()
 
     def info(self):
         print("info")
@@ -149,9 +142,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def maximize(self):
         if self.isMaximized():
-            self.showNormal()
+            self._showNormal()
         else:
-            self.showMaximized()
+            self._showMaximized()
 
     def show_image(self, vimage):
         pixmap = vimage.pixmap
@@ -192,3 +185,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     # Helpers
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
+
+    def _showNormal(self):
+        self.showNormal()
+
+    def _showMaximized(self):
+        self.showMaximized()
+
+    def _showFullScreen(self):
+        self.showFullScreen()

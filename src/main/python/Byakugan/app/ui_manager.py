@@ -48,15 +48,7 @@ class UiManager:
 
     @cached_property
     def scale_icon(self):
-        return qta.icon('mdi.arrow-expand-all', color=self.color, color_active=self.active_color)
-
-    @cached_property
-    def fullscreen_icon(self):
         return qta.icon('mdi.fit-to-page-outline', color=self.color, color_active=self.active_color)
-
-    @cached_property
-    def slideshow_icon(self):
-        return qta.icon('mdi.television-play', color=self.color, color_active=self.active_color)
 
     @cached_property
     def info_icon(self):
@@ -93,6 +85,10 @@ class UiManager:
     @cached_property
     def settings_icon(self):
         return qta.icon('mdi.settings', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def slideshow_icon(self):
+        return qta.icon('mdi.television-play', color=self.color, color_active=self.active_color)
 
     @cached_property
     def minimize_icon(self):
