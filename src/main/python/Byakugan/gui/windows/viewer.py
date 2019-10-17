@@ -91,7 +91,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.show_image(self.images_list.get_next())
 
         # Restore last window state
-        self._restoreGeometry()
+        self._restore_geometry()
         self._startup()
 
     # Actions
@@ -140,23 +140,23 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def slideshow_action(self):
         if self.isFullScreen():
-            self._showNormal()
+            self._show_normal()
         else:
-            self._showFullScreen()
+            self._show_fullscreen()
 
     def minimize_action(self):
         self.showMinimized()
 
     def maximize_action(self):
         if self.isMaximized():
-            self._showNormal()
+            self._show_normal()
         else:
-            self._showMaximized()
+            self._show_maximized()
 
     def exit_action(self):
         if self.isFullScreen():
-            self._showNormal()
-        self._saveGeometry()
+            self._show_normal()
+        self._save_geometry()
         self.close()
         self.app.quit()
 
@@ -198,26 +198,26 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
 
-    def _showNormal(self):
+    def _show_normal(self):
         self.showNormal()
         self.actions.maximize.setIcon(self.app.ui.maximize_icon)
         self.actions.minimize.setVisible(True)
         self.actions.maximize.setVisible(True)
 
-    def _showMaximized(self):
+    def _show_maximized(self):
         self.showMaximized()
         self.actions.maximize.setIcon(self.app.ui.restore_icon)
 
-    def _showFullScreen(self):
+    def _show_fullscreen(self):
         self.showFullScreen()
         self.actions.minimize.setVisible(False)
         self.actions.maximize.setVisible(False)
 
-    def _saveGeometry(self):
+    def _save_geometry(self):
         geometry = self.saveGeometry()
         self.app.settings.set('viewer_window_geometry', geometry)
 
-    def _restoreGeometry(self):
+    def _restore_geometry(self):
         show_status_bar = self.app.settings.get('vui_show_status_bar', False, bool)
         load_geometry = self.app.settings.get('vui_save_window_geometry', False, bool)
 
@@ -228,9 +228,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
             try:
                 self.restoreGeometry(last_geometry)
                 if self.isMaximized():
-                    self._showMaximized()
+                    self._show_maximized()
                 else:
-                    self._showNormal()
+                    self._show_normal()
             except Exception:
                 self._center_window()
         else:
