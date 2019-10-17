@@ -92,6 +92,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         # Restore last window state
         self._restoreGeometry()
+        self._startup()
 
     # Actions
 
@@ -232,11 +233,14 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
                     self._showNormal()
             except Exception:
                 self._center_window()
-            else:
-                self._center_window()
+        else:
+            self._center_window()
 
     def _center_window(self):
         self.resize(self.app.ui.best_window_width, self.app.ui.best_window_height)
         frame_geometry = self.frameGeometry()
         frame_geometry.moveCenter(self.app.ui.screen_center)
         self.move(frame_geometry.topLeft())
+
+    def _startup(self):
+        print(self.app.app_name)

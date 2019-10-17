@@ -156,12 +156,12 @@ class UiManager:
 
     @cached_property
     def screen_width(self):
-        screen_resolution = self.ctx.app.desktop().screenGeometry()
+        screen_resolution = self.ctx.app.primaryScreen().availableGeometry()
         return screen_resolution.width()
 
     @cached_property
     def screen_height(self):
-        screen_resolution = self.ctx.app.desktop().screenGeometry()
+        screen_resolution = self.ctx.app.primaryScreen().availableGeometry()
         return screen_resolution.height()
 
     @cached_property
