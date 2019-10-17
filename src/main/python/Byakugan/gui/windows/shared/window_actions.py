@@ -162,6 +162,7 @@ class WindowActions:
         action.setToolTip("Play Slideshow")
         action.setStatusTip("Play Slideshow")
         action.setShortcuts(["Alt+Return", "F11"])
+        action.setCheckable(True)
         return action
 
     @cached_property

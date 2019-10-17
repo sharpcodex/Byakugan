@@ -30,6 +30,12 @@ class SettingsManager:
         except (QSettings.AccessError, QSettings.FormatError):
             SettingsManager.error_box()
 
+    def get_value(self, key, default_value):
+        try:
+            return self.settings.value(key, default_value)
+        except (QSettings.AccessError, QSettings.FormatError):
+            SettingsManager.error_box()
+
     def _fill_defaults(self):
         # App Info
         self.settings.setValue('app_name', APPLICATION_NAME)

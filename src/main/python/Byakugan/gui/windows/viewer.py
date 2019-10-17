@@ -12,46 +12,48 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.setupUi(self)
         self.app = app_manager
         self.images_list = images_list
+
+        # Setup: window
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowTitle(self.app.app_name)
+        self.setWindowIcon(self.app.ui.window_icon)
+        self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
+        self._restoreGeometry()
+
+        # Setup self
         self.old_pos = self.pos()
         self.window_moving = False
 
-        # Setup: window
-        self.setWindowTitle(self.app.app_name)
-        self.setWindowIcon(self.app.ui.window_icon)
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.resize(self.app.ui.window_width, self.app.ui.window_height)
-        self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
+        # Setup: events
         self.label.mouseDoubleClickEvent = self.label_double_click_event
+
         # Setup: actions
         self.actions = WindowActions(self.app)
-
-        self.actions.previous.triggered.connect(self.previous)
-        self.actions.next.triggered.connect(self.next)
-        self.actions.zoom_in.triggered.connect(self.zoomin)
-        self.actions.zoom_out.triggered.connect(self.zoomout)
-        self.actions.rotate.triggered.connect(self.rotate)
-        self.actions.flip.triggered.connect(self.flip)
-        self.actions.scale_w.triggered.connect(self.scale_w)
-        self.actions.scale_h.triggered.connect(self.scale_h)
-        self.actions.scale.triggered.connect(self.scale)
-        self.actions.info.triggered.connect(self.info)
-        self.actions.save_as.triggered.connect(self.save_as)
-        self.actions.print.triggered.connect(self.print)
-        self.actions.delete_item.triggered.connect(self.delete_item)
-        self.actions.settings.triggered.connect(self.settings)
-        self.actions.slideshow.triggered.connect(self.slideshow)
-        self.actions.minimize.triggered.connect(self.minimize)
-        self.actions.maximize.triggered.connect(self.maximize)
-        self.actions.exit.triggered.connect(self.app.quit)
+        self.actions.previous.triggered.connect(self.previous_action)
+        self.actions.next.triggered.connect(self.next_action)
+        self.actions.zoom_in.triggered.connect(self.zoom_in_action)
+        self.actions.zoom_out.triggered.connect(self.zoom_out_action)
+        self.actions.rotate.triggered.connect(self.rotate_action)
+        self.actions.flip.triggered.connect(self.flip_action)
+        self.actions.scale_w.triggered.connect(self.scale_w_action)
+        self.actions.scale_h.triggered.connect(self.scale_h_action)
+        self.actions.scale.triggered.connect(self.scale_action)
+        self.actions.info.triggered.connect(self.info_action)
+        self.actions.save_as.triggered.connect(self.save_as_action)
+        self.actions.print.triggered.connect(self.print_action)
+        self.actions.delete_item.triggered.connect(self.delete_action)
+        self.actions.settings.triggered.connect(self.settings_action)
+        self.actions.slideshow.triggered.connect(self.slideshow_action)
+        self.actions.minimize.triggered.connect(self.minimize_action)
+        self.actions.maximize.triggered.connect(self.maximize_action)
+        self.actions.exit.triggered.connect(self.exit_action)
 
         # Setup: toolbar
         self.toolbar = QToolBar('toolbar')
         self.toolbar.setMovable(False)
         self.toolbar.setContextMenuPolicy(Qt.NoContextMenu)
-        self.toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
         self.setContextMenuPolicy(Qt.NoContextMenu)
         self.addToolBar(self.toolbar)
-
         self.toolbar.addAction(self.actions.previous)
         self.toolbar.addAction(self.actions.next)
         self.toolbar.addSeparator()
@@ -68,7 +70,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.maximize)
         self.toolbar.addAction(self.actions.exit)
 
-        # Setup: label context menu
+        # Setup: context menu
         self.label.addAction(self.actions.previous)
         self.label.addAction(self.actions.next)
         self.label.addAction(self.actions.zoom_in)
@@ -84,86 +86,85 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.delete_item)
         self.label.addAction(self.actions.settings)
         self.label.addAction(self.actions.slideshow)
+        self.label.addAction(self.actions.exit)
 
         # Show first image
         self.show_image(self.images_list.get_next())
 
     # Actions
-    def previous(self):
+
+    def previous_action(self):
         print("previous")
 
-    def next(self):
+    def next_action(self):
         print("next")
 
-    def zoomin(self):
+    def zoom_in_action(self):
         print("zoomin")
 
-    def zoomout(self):
+    def zoom_out_action(self):
         print("zoomout")
 
-    def rotate(self):
+    def rotate_action(self):
         print("rotate")
 
-    def flip(self):
+    def flip_action(self):
         print("flip")
 
-    def scale_w(self):
+    def scale_w_action(self):
         print("scale_w")
 
-    def scale_h(self):
+    def scale_h_action(self):
         print("scale_h")
 
-    def scale(self):
+    def scale_action(self):
         print("scale")
 
-    def slideshow(self):
+    def info_action(self):
+        print("info")
+
+    def save_as_action(self):
+        print("save_as")
+
+    def print_action(self):
+        print("print")
+
+    def delete_action(self):
+        print("delete")
+
+    def settings_action(self):
+        print("settings")
+
+    def slideshow_action(self):
         if self.isFullScreen():
             self._showNormal()
         else:
             self._showFullScreen()
 
-    def info(self):
-        print("info")
-
-    def save_as(self):
-        print("save_as")
-
-    def print(self):
-        print("print")
-
-    def delete_item(self):
-        print("delete")
-
-    def settings(self):
-        print("settings")
-
-    def minimize(self):
+    def minimize_action(self):
         self.showMinimized()
 
-    def maximize(self):
+    def maximize_action(self):
         if self.isMaximized():
             self._showNormal()
         else:
             self._showMaximized()
 
-    def show_image(self, vimage):
-        pixmap = vimage.pixmap
-        target_width = self.width() if pixmap.width() > self.width() else pixmap.width()
-        target_height = self.height() if pixmap.height() > self.height() else pixmap.height()
-        pixmap = pixmap.scaled(target_width, target_height, Qt.KeepAspectRatio, Qt.FastTransformation)
-        self.label.setPixmap(pixmap)
+    def exit_action(self):
+        if self.isFullScreen():
+            self._showNormal()
+        self._saveGeometry()
+        self.close()
+        self.app.quit()
 
-    def center(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+    # Events
 
     def label_double_click_event(self, event):
         pass
 
     def mouseDoubleClickEvent(self, event):
-        self.maximize()
+        if event.button() == Qt.LeftButton:
+            self.maximize_action()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -176,21 +177,48 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
             self.window_moving = False
 
     def mouseMoveEvent(self, event):
-        if self.window_moving:
+        if self.window_moving and not self.isMaximized() and not self.isFullScreen():
             delta = QPoint(event.globalPos() - self.old_pos)
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.old_pos = event.globalPos()
             self.setWindowOpacity(0.5)
 
     # Helpers
+
+    def show_image(self, vimage):
+        pixmap = vimage.pixmap
+        target_width = self.width() if pixmap.width() > self.width() else pixmap.width()
+        target_height = self.height() if pixmap.height() > self.height() else pixmap.height()
+        pixmap = pixmap.scaled(target_width, target_height, Qt.KeepAspectRatio, Qt.FastTransformation)
+        self.label.setPixmap(pixmap)
+
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
 
     def _showNormal(self):
         self.showNormal()
+        self.actions.maximize.setIcon(self.app.ui.maximize_icon)
+        self.actions.minimize.setVisible(True)
+        self.actions.maximize.setVisible(True)
 
     def _showMaximized(self):
         self.showMaximized()
+        self.actions.maximize.setIcon(self.app.ui.restore_icon)
 
     def _showFullScreen(self):
         self.showFullScreen()
+        self.actions.minimize.setVisible(False)
+        self.actions.maximize.setVisible(False)
+
+    def _saveGeometry(self):
+        geometry = self.saveGeometry()
+        self.app.settings.set('viewer_window_geometry', geometry)
+
+    def _restoreGeometry(self):
+        last_geometry = self.app.settings.get_value('viewer_window_geometry', '')
+        try:
+            self.restoreGeometry(last_geometry)
+        except Exception:
+            frame_geometry = self.frameGeometry()
+            frame_geometry.moveCenter(self.app.ui.screen_center)
+            self.move(frame_geometry.topLeft())

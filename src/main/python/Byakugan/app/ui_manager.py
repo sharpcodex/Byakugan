@@ -1,5 +1,6 @@
 from fbs_runtime.application_context import cached_property
 from qtpy.QtGui import QColor, QIcon
+from qtpy.QtWidgets import QDesktopWidget
 import qtawesome as qta
 
 from app.defaults import *
@@ -158,6 +159,10 @@ class UiManager:
     # -------------- Geometry -----------------------
 
     @cached_property
+    def screen_center(self):
+        return QDesktopWidget().availableGeometry().center()
+
+    @cached_property
     def screen_width(self):
         screen_resolution = self.ctx.app.desktop().screenGeometry()
         return screen_resolution.width()
@@ -172,16 +177,8 @@ class UiManager:
         return self.screen_height * WINDOW_HEIGHT_P
 
     @cached_property
-    def max_window_height(self):
-        return self.screen_height * MAX_WINDOW_HEIGHT_P
-
-    @cached_property
     def window_width(self):
         return self.screen_width * WINDOW_WIDTH_P
-
-    @cached_property
-    def max_window_width(self):
-        return self.screen_width * MAX_WINDOW_WIDTH_P
 
     # Helpers
 
