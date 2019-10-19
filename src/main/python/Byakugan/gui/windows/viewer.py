@@ -87,20 +87,20 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.slideshow)
         self.label.addAction(self.actions.exit)
 
-        # Show first image
-        self.show_image(self.images_list.get_next())
-
         # Restore last window state
         self._restore_geometry()
+        # Startup
         self._startup()
+        # Show first image
+        self.show_image(self.images_list.__next__())
 
     # Actions
 
     def previous_action(self):
-        print("previous")
+        self.show_image(self.images_list.__prev__())
 
     def next_action(self):
-        print("next")
+        self.show_image(self.images_list.__next__())
 
     def zoom_in_action(self):
         print("zoomin")
@@ -189,10 +189,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     # Helpers
 
     def show_image(self, vimage):
-        pixmap = vimage.pixmap
-        target_width = self.width() if pixmap.width() > self.width() else pixmap.width()
-        target_height = self.height() if pixmap.height() > self.height() else pixmap.height()
-        pixmap = pixmap.scaled(target_width, target_height, Qt.KeepAspectRatio, Qt.FastTransformation)
+        pixmap = vimage.max_resize(self.width(), self.height())
         self.label.setPixmap(pixmap)
 
     def bar_log(self, msg):
@@ -237,10 +234,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
             self._center_window()
 
     def _center_window(self):
-        self.resize(self.app.ui.best_window_width, self.app.ui.best_window_height)
+        self.setFixedSize(self.app.ui.best_window_width, self.app.ui.best_window_height)
         frame_geometry = self.frameGeometry()
         frame_geometry.moveCenter(self.app.ui.screen_center)
         self.move(frame_geometry.topLeft())
 
     def _startup(self):
-        print(self.app.app_name)
+        pass

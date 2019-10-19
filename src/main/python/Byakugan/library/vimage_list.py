@@ -1,43 +1,24 @@
-import os
-from qtpy.QtGui import QPixmap
-from itertools import cycle
-from pathlib import Path
+from helpers.io import IO
+from library.vimage import VImage
 
 
-class ImageList:
+class VImageList:
     def __init__(self):
         self.images_list = CircularList([])
 
     def from_path(self, path):
-        images_files_list = []
-        images_list = []
-
-        path = Path(path)
-        if path.is_file():
-            path = path.parents[0]
-        if path.is_dir():
-            images_files_list = list(path.glob('*.jpg'))
-
-        for image_file in images_files_list:
-            print(image_file)
-            pixmap = QPixmap(str(image_file))
-            images_list.append(Image(image_file, pixmap))
-
+        images_list = [VImage(img) for img in IO.get_images(path)]
         self.images_list = CircularList(images_list)
-
         return self
 
-    def get_next(self):
+    def __next__(self):
         return self.images_list.__next__()
 
-    def get_prev(self):
+    def __prev__(self):
         return self.images_list.__prev__()
 
-
-class Image:
-    def __init__(self, path, pixmap):
-        self.path = path
-        self.pixmap = pixmap
+    def __iter__(self):
+        return self
 
 
 class CircularList(object):

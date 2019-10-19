@@ -25,9 +25,9 @@ if __name__ == '__main__':
 
     if target_image:
         from gui.windows.viewer import ViewerWindow
-        from helpers.image_list import ImageList
+        from library.vimage_list import VImageList
 
-        window = ViewerWindow(app_manager, ImageList().from_path(target_image))
+        window = ViewerWindow(app_manager, VImageList().from_path(target_image))
         window.show()
     else:
         from gui.windows.main import MainWindow
