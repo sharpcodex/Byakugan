@@ -1,7 +1,6 @@
 from pathlib import Path
-from qtpy.QtGui import QPixmap
-import cv2
 
+import cv2
 
 
 class IO:
