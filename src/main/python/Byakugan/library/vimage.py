@@ -2,7 +2,7 @@ from fbs_runtime.application_context import cached_property
 from qtpy.QtGui import QImage, QPixmap
 import cv2
 
-from helpers.io import IO
+from library.io import IO
 
 
 class VImage:
@@ -26,7 +26,7 @@ class VImage:
             qimage = QImage(image,
                             image.shape[1],
                             image.shape[0],
-                            image.strides[0],  # <--- +++
+                            image.strides[0],
                             qformat)
             qimage = qimage.rgbSwapped()
             return QPixmap.fromImage(qimage)
