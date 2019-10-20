@@ -1,4 +1,5 @@
 from qtpy.QtCore import Qt, QPoint
+from qtpy.QtGui import QPixmap
 from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
@@ -209,8 +210,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     # Helpers
 
     def repaint_image(self):
-        w = self.label.width()
-        h = self.label.height()
+        w = self.centralWidget().width() - 2
+        h = self.centralWidget().height() - 2
         pixmap = self.image.pixmap(self.image_size_policy, w, h)
         self.label.setPixmap(pixmap)
 
