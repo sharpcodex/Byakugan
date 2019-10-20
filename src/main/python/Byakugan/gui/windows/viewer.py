@@ -32,11 +32,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.next.triggered.connect(self.next_action)
         self.actions.zoom_in.triggered.connect(self.zoom_in_action)
         self.actions.zoom_out.triggered.connect(self.zoom_out_action)
-        self.actions.rotate.triggered.connect(self.rotate_action)
-        self.actions.flip.triggered.connect(self.flip_action)
         self.actions.scale_w.triggered.connect(self.scale_w_action)
         self.actions.scale_h.triggered.connect(self.scale_h_action)
         self.actions.scale.triggered.connect(self.scale_action)
+        self.actions.rotate.triggered.connect(self.rotate_action)
+        self.actions.flip.triggered.connect(self.flip_action)
         self.actions.info.triggered.connect(self.info_action)
         self.actions.save_as.triggered.connect(self.save_as_action)
         self.actions.print.triggered.connect(self.print_action)
@@ -58,11 +58,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.actions.zoom_in)
         self.toolbar.addAction(self.actions.zoom_out)
-        self.toolbar.addAction(self.actions.rotate)
-        self.toolbar.addAction(self.actions.flip)
         self.toolbar.addAction(self.actions.scale_w)
         self.toolbar.addAction(self.actions.scale_h)
         self.toolbar.addAction(self.actions.scale)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.actions.rotate)
+        self.toolbar.addAction(self.actions.flip)
         self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addAction(self.actions.minimize)
@@ -74,11 +75,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.next)
         self.label.addAction(self.actions.zoom_in)
         self.label.addAction(self.actions.zoom_out)
-        self.label.addAction(self.actions.rotate)
-        self.label.addAction(self.actions.flip)
         self.label.addAction(self.actions.scale_w)
         self.label.addAction(self.actions.scale_h)
         self.label.addAction(self.actions.scale)
+        self.label.addAction(self.actions.rotate)
+        self.label.addAction(self.actions.flip)
         self.label.addAction(self.actions.info)
         self.label.addAction(self.actions.save_as)
         self.label.addAction(self.actions.print)
@@ -89,18 +90,19 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         # Restore last window state
         self._restore_geometry()
-        # Startup
-        self._startup()
         # Show first image
-        self.show_image(self.images_list.__next__())
+        self.image = next(self.images_list)
+        self.image_size_policy = 'fit'
+        self.repaint_image()
 
     # Actions
-
     def previous_action(self):
-        self.show_image(self.images_list.__prev__())
+        self.image = self.images_list.__prev__()
+        self.repaint_image()
 
     def next_action(self):
-        self.show_image(self.images_list.__next__())
+        self.image = next(self.images_list)
+        self.repaint_image()
 
     def zoom_in_action(self):
         print("zoomin")
@@ -115,13 +117,31 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         print("flip")
 
     def scale_w_action(self):
-        print("scale_w")
+        if self.actions.scale_w.isChecked():
+            self.image_size_policy = 'scale_w'
+        else:
+            self.image_size_policy = 'fit'
+        self.actions.scale_h.setChecked(False)
+        self.actions.scale.setChecked(False)
+        self.repaint_image()
 
     def scale_h_action(self):
-        print("scale_h")
+        if self.actions.scale_h.isChecked():
+            self.image_size_policy = 'scale_h'
+        else:
+            self.image_size_policy = 'fit'
+        self.actions.scale_w.setChecked(False)
+        self.actions.scale.setChecked(False)
+        self.repaint_image()
 
     def scale_action(self):
-        print("scale")
+        if self.actions.scale.isChecked():
+            self.image_size_policy = 'scale'
+        else:
+            self.image_size_policy = 'fit'
+        self.actions.scale_w.setChecked(False)
+        self.actions.scale_h.setChecked(False)
+        self.repaint_image()
 
     def info_action(self):
         print("info")
@@ -188,8 +208,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     # Helpers
 
-    def show_image(self, vimage):
-        pixmap = vimage.max_resize(self.width(), self.height())
+    def repaint_image(self):
+        w = self.label.width()
+        h = self.label.height()
+        pixmap = self.image.pixmap(self.image_size_policy, w, h)
         self.label.setPixmap(pixmap)
 
     def bar_log(self, msg):
@@ -200,15 +222,18 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.maximize.setIcon(self.app.ui.maximize_icon)
         self.actions.minimize.setVisible(True)
         self.actions.maximize.setVisible(True)
+        self.repaint_image()
 
     def _show_maximized(self):
         self.showMaximized()
         self.actions.maximize.setIcon(self.app.ui.restore_icon)
+        self.repaint_image()
 
     def _show_fullscreen(self):
         self.showFullScreen()
         self.actions.minimize.setVisible(False)
         self.actions.maximize.setVisible(False)
+        self.repaint_image()
 
     def _save_geometry(self):
         geometry = self.saveGeometry()
@@ -238,6 +263,3 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         frame_geometry = self.frameGeometry()
         frame_geometry.moveCenter(self.app.ui.screen_center)
         self.move(frame_geometry.topLeft())
-
-    def _startup(self):
-        pass

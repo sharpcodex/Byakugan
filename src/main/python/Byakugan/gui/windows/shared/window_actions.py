@@ -30,8 +30,6 @@ class WindowActions:
         action.setShortcuts(["Right", "PgDown"])
         return action
 
-    # --
-
     @cached_property
     def zoom_in(self):
         action = QAction(self.app.ui.zoom_in_icon, "Zoom in")
@@ -46,6 +44,33 @@ class WindowActions:
         action.setToolTip("Zoom Out")
         action.setStatusTip("Zoom Out")
         action.setShortcuts(["Ctrl+-", "Ctrl+_", "Down"])
+        return action
+
+    @cached_property
+    def scale_w(self):
+        action = QAction(self.app.ui.scale_w_icon, "Scale to width")
+        action.setToolTip("Scale to Width")
+        action.setStatusTip("Scale to Width")
+        action.setShortcuts(["Shift+Right"])
+        action.setCheckable(True)
+        return action
+
+    @cached_property
+    def scale_h(self):
+        action = QAction(self.app.ui.scale_h_icon, "Scale to Height")
+        action.setToolTip("Scale to Height")
+        action.setStatusTip("Scale to Height")
+        action.setShortcuts(["Shift+Up"])
+        action.setCheckable(True)
+        return action
+
+    @cached_property
+    def scale(self):
+        action = QAction(self.app.ui.scale_icon, "Scale to Fit")
+        action.setToolTip("Scale to Fit")
+        action.setStatusTip("Scale to Fit")
+        action.setShortcuts(["Ctrl+0"])
+        action.setCheckable(True)
         return action
 
     @cached_property
@@ -65,38 +90,12 @@ class WindowActions:
         return action
 
     @cached_property
-    def scale_w(self):
-        action = QAction(self.app.ui.scale_w_icon, "Scale to width")
-        action.setToolTip("Scale to Width")
-        action.setStatusTip("Scale to Width")
-        action.setShortcuts(["Shift+Right"])
-        return action
-
-    @cached_property
-    def scale_h(self):
-        action = QAction(self.app.ui.scale_h_icon, "Scale to Height")
-        action.setToolTip("Scale to Height")
-        action.setStatusTip("Scale to Height")
-        action.setShortcuts(["Shift+Up"])
-        return action
-
-    @cached_property
-    def scale(self):
-        action = QAction(self.app.ui.scale_icon, "Scale to Fit")
-        action.setToolTip("Scale to Fit")
-        action.setStatusTip("Scale to Fit")
-        action.setShortcuts(["Ctrl+0"])
-        return action
-
-    @cached_property
     def info(self):
         action = QAction(self.app.ui.info_icon, "Information")
         action.setToolTip("Show Information Window")
         action.setStatusTip("Show Information Window")
         action.setShortcuts(["Ctrl+I"])
         return action
-
-    # --
 
     @cached_property
     def new(self):
