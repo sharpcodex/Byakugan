@@ -15,7 +15,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.app = app_manager
         self.images_list = images_list
 
-        self.old_pos = None
+        self.win_old_pos = None
+        self.lbl_old_pos = None
         self.window_moving = False
 
         self.image = next(self.images_list)
@@ -28,6 +29,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         # Init events
         self.label.mouseDoubleClickEvent = self.label_double_click_event
+        self.label.mousePressEvent = self.label_mouse_press_event
+        self.label.mouseMoveEvent = self.label_mouse_move_event
 
         # Startup
         self.startup()
@@ -216,7 +219,23 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     # Events
 
     def label_double_click_event(self, event):
-        pass
+        xr = event.pos().x() / self.label.width()
+        h_max = self.scrollArea.horizontalScrollBar().maximum()
+        yr = event.pos().y() / self.label.height()
+        v_max = self.scrollArea.verticalScrollBar().maximum()
+        self.scrollArea.horizontalScrollBar().setValue(h_max * xr)
+        self.scrollArea.verticalScrollBar().setValue(v_max * yr)
+
+    def label_mouse_press_event(self, event):
+        if event.button() == Qt.LeftButton:
+            self.lbl_old_pos = event.pos()
+
+    def label_mouse_move_event(self, event):
+        if event.buttons() == Qt.LeftButton:
+            offset = self.lbl_old_pos - event.pos()
+            self.lbl_old_pos = event.pos()
+            self.scrollArea.verticalScrollBar().setValue(self.scrollArea.verticalScrollBar().value() + offset.y())
+            self.scrollArea.horizontalScrollBar().setValue(self.scrollArea.horizontalScrollBar().value() + offset.x())
 
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -224,7 +243,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.old_pos = event.globalPos()
+            self.win_old_pos = event.globalPos()
             self.window_moving = True
 
     def mouseReleaseEvent(self, event):
@@ -234,9 +253,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def mouseMoveEvent(self, event):
         if self.window_moving and not self.isMaximized() and not self.isFullScreen():
-            delta = QPoint(event.globalPos() - self.old_pos)
+            delta = QPoint(event.globalPos() - self.win_old_pos)
             self.move(self.x() + delta.x(), self.y() + delta.y())
-            self.old_pos = event.globalPos()
+            self.win_old_pos = event.globalPos()
             self.setWindowOpacity(0.5)
 
     # Helpers
@@ -291,7 +310,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         else:
             self._center_window()
 
-        self.old_pos = self.pos()
+        self.win_old_pos = self.pos()
 
     def _center_window(self):
         self.setFixedSize(self.app.ui.best_window_width, self.app.ui.best_window_height)
