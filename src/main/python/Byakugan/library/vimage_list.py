@@ -4,21 +4,38 @@ from helpers.path import PathHelpers
 
 class VImageList:
     def __init__(self):
-        self.images_list = CircularList([])
+        self.images_list = None
+        self.target_path = None
+        self.target_list = None
 
-    def from_path(self, path):
-        images_list = [VImage(img) for img in PathHelpers().get_images_in_path(path)]
-        self.images_list = CircularList(images_list)
+    def from_path(self, target_path):
+        self.target_path = target_path
+        return self
+
+    def from_list(self, target_list):
+        self.target_list = target_list
         return self
 
     def __next__(self):
+        if not self.images_list:
+            self._build()
         return self.images_list.__next__()
 
     def __prev__(self):
+        if not self.images_list:
+            self._build()
         return self.images_list.__prev__()
 
     def __iter__(self):
         return self
+
+    def _build(self):
+        if self.target_path:
+            images_list = [VImage(img) for img in PathHelpers().get_images_in_path(self.target_path)]
+            self.images_list = CircularList(images_list)
+        if self.target_list:
+            images_list = [VImage(img) for img in self.target_list]
+            self.images_list = CircularList(images_list)
 
 
 class CircularList(object):
