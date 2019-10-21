@@ -12,8 +12,4 @@ VUI_SAVE_WINDOW_GEOMETRY = False
 VUI_SHOW_STATUS_BAR = False
 
 # Library
-IMG_EXTENSIONS = ['*.bmp', '*.png',
-                  '*.jpeg', '*.jpg', '*.jpe', '*.jp2',
-                  '*.pbm', '*.pgm', '*.ppm',
-                  '*.sr', '*.ras',
-                  '*.tiff', '*.tif']
+IMG_EXTENSIONS = ['*.bmp', '*.png', '*.jpg', '*.jpeg', '*.jpe']

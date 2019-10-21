@@ -1,11 +1,11 @@
 from pathlib import Path
-import cv2
+
 from app.defaults import IMG_EXTENSIONS
 
 
-class IO:
+class PathHelpers:
     @staticmethod
-    def get_images(path):
+    def get_images_in_path(path):
         files_list = []
         path = Path(path)
         if path.is_file():
@@ -14,7 +14,3 @@ class IO:
             for ext in IMG_EXTENSIONS:
                 files_list.extend(path.glob(ext))
         return files_list
-
-    @staticmethod
-    def load_image(path):
-        return cv2.imread(str(path), cv2.IMREAD_COLOR)

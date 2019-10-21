@@ -22,6 +22,22 @@ class UiManager:
         return qta.icon('mdi.page-previous-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
+    def fit_to_window_icon(self):
+        return qta.icon('mdi.fit-to-page-outline', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def fit_to_width_icon(self):
+        return qta.icon('mdi.arrow-expand-horizontal', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def fit_to_height_icon(self):
+        return qta.icon('mdi.arrow-expand-vertical', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def show_original_size_icon(self):
+        return qta.icon('mdi.image-filter-center-focus-weak', color=self.color, color_active=self.active_color)
+
+    @cached_property
     def zoom_in_icon(self):
         return qta.icon('mdi.magnify-plus-outline', color=self.color, color_active=self.active_color)
 
@@ -36,18 +52,6 @@ class UiManager:
     @cached_property
     def flip_icon(self):
         return qta.icon('mdi.axis-z-rotate-counterclockwise', color=self.color, color_active=self.active_color)
-
-    @cached_property
-    def scale_w_icon(self):
-        return qta.icon('mdi.arrow-expand-horizontal', color=self.color, color_active=self.active_color)
-
-    @cached_property
-    def scale_h_icon(self):
-        return qta.icon('mdi.arrow-expand-vertical', color=self.color, color_active=self.active_color)
-
-    @cached_property
-    def scale_icon(self):
-        return qta.icon('mdi.fit-to-page-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def info_icon(self):

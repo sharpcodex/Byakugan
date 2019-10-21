@@ -1,5 +1,5 @@
-from library.io import IO
 from library.vimage import VImage
+from helpers.path import PathHelpers
 
 
 class VImageList:
@@ -7,7 +7,7 @@ class VImageList:
         self.images_list = CircularList([])
 
     def from_path(self, path):
-        images_list = [VImage(img) for img in IO.get_images(path)]
+        images_list = [VImage(img) for img in PathHelpers().get_images_in_path(path)]
         self.images_list = CircularList(images_list)
         return self
 

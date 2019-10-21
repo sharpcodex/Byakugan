@@ -16,8 +16,8 @@ class WindowActions:
     @cached_property
     def previous(self):
         action = QAction(self.app.ui.previous_icon, "Previous")
-        action.setToolTip("View Previous")
-        action.setStatusTip("View Previous")
+        action.setToolTip("Previous")
+        action.setStatusTip("View previous image")
         action.setShortcuts(["Left", "PgUp"])
         action.setShortcutContext(Qt.ApplicationShortcut)
         return action
@@ -25,75 +25,84 @@ class WindowActions:
     @cached_property
     def next(self):
         action = QAction(self.app.ui.next_icon, "Next")
-        action.setToolTip("View Next")
-        action.setStatusTip("View Next")
+        action.setToolTip("Next")
+        action.setStatusTip("View next image")
         action.setShortcuts(["Right", "PgDown"])
+        return action
+
+    @cached_property
+    def fit_to_window(self):
+        action = QAction(self.app.ui.fit_to_window_icon, "Fit to window")
+        action.setToolTip("Fit to window")
+        action.setStatusTip("Fit image to window size")
+        action.setShortcuts(["Shift+Down"])
+        action.setCheckable(True)
+        return action
+
+    @cached_property
+    def fit_to_width(self):
+        action = QAction(self.app.ui.fit_to_width_icon, "Fit to width")
+        action.setToolTip("Fit to width")
+        action.setStatusTip("Fit image to window width")
+        action.setShortcuts(["Shift+Right"])
+        action.setCheckable(True)
+        return action
+
+    @cached_property
+    def fit_to_height(self):
+        action = QAction(self.app.ui.fit_to_height_icon, "Fit to height")
+        action.setToolTip("Fit to height")
+        action.setStatusTip("Fit image to window height")
+        action.setShortcuts(["Shift+Up"])
+        action.setCheckable(True)
+        return action
+
+    @cached_property
+    def show_original_size(self):
+        action = QAction(self.app.ui.show_original_size_icon, "Original Size")
+        action.setToolTip("Original Size")
+        action.setStatusTip("Show original image size")
+        action.setShortcuts(["Shift+Left"])
+        action.setCheckable(True)
         return action
 
     @cached_property
     def zoom_in(self):
         action = QAction(self.app.ui.zoom_in_icon, "Zoom in")
-        action.setToolTip("Zoom In")
-        action.setStatusTip("Zoom In")
+        action.setToolTip("Zoom in")
+        action.setStatusTip("Zoom in")
         action.setShortcuts(["Ctrl++", "Ctrl+=", "Up"])
         return action
 
     @cached_property
     def zoom_out(self):
         action = QAction(self.app.ui.zoom_out_icon, "Zoom out")
-        action.setToolTip("Zoom Out")
-        action.setStatusTip("Zoom Out")
+        action.setToolTip("Zoom out")
+        action.setStatusTip("Zoom out")
         action.setShortcuts(["Ctrl+-", "Ctrl+_", "Down"])
-        return action
-
-    @cached_property
-    def scale_w(self):
-        action = QAction(self.app.ui.scale_w_icon, "Scale to width")
-        action.setToolTip("Scale to Width")
-        action.setStatusTip("Scale to Width")
-        action.setShortcuts(["Shift+Right"])
-        action.setCheckable(True)
-        return action
-
-    @cached_property
-    def scale_h(self):
-        action = QAction(self.app.ui.scale_h_icon, "Scale to Height")
-        action.setToolTip("Scale to Height")
-        action.setStatusTip("Scale to Height")
-        action.setShortcuts(["Shift+Up"])
-        action.setCheckable(True)
-        return action
-
-    @cached_property
-    def scale(self):
-        action = QAction(self.app.ui.scale_icon, "Scale to Fit")
-        action.setToolTip("Scale to Fit")
-        action.setStatusTip("Scale to Fit")
-        action.setShortcuts(["Ctrl+0"])
-        action.setCheckable(True)
         return action
 
     @cached_property
     def rotate(self):
         action = QAction(self.app.ui.rotate_icon, "Rotate")
-        action.setToolTip("Rotate Clockwise")
-        action.setStatusTip("Rotate Clockwise")
+        action.setToolTip("Rotate")
+        action.setStatusTip("Rotate image clockwise")
         action.setShortcuts(["Ctrl+Down"])
         return action
 
     @cached_property
     def flip(self):
         action = QAction(self.app.ui.flip_icon, "Flip")
-        action.setToolTip("Flip Horizontally")
-        action.setStatusTip("Flip Horizontally")
+        action.setToolTip("Flip")
+        action.setStatusTip("Flip image horizontally")
         action.setShortcuts(["Ctrl+Right"])
         return action
 
     @cached_property
     def info(self):
-        action = QAction(self.app.ui.info_icon, "Information")
-        action.setToolTip("Show Information Window")
-        action.setStatusTip("Show Information Window")
+        action = QAction(self.app.ui.info_icon, "Info")
+        action.setToolTip("Image info")
+        action.setStatusTip("Show image information window")
         action.setShortcuts(["Ctrl+I"])
         return action
 
@@ -101,7 +110,7 @@ class WindowActions:
     def new(self):
         action = QAction(self.app.ui.new_icon, "New")
         action.setToolTip("New")
-        action.setStatusTip("New")
+        action.setStatusTip("Create new image")
         action.setShortcuts(["Ctrl+N"])
         return action
 
@@ -109,7 +118,7 @@ class WindowActions:
     def open(self):
         action = QAction(self.app.ui.open_icon, "Open")
         action.setToolTip("Open")
-        action.setStatusTip("Open")
+        action.setStatusTip("Open an existing image")
         action.setShortcuts(["Ctrl+O"])
         return action
 
@@ -117,15 +126,15 @@ class WindowActions:
     def save(self):
         action = QAction(self.app.ui.save_icon, "Save")
         action.setToolTip("Save")
-        action.setStatusTip("Save")
+        action.setStatusTip("Save changes")
         action.setShortcuts(["Ctrl+S"])
         return action
 
     @cached_property
     def save_as(self):
-        action = QAction(self.app.ui.save_as_icon, "Save As")
+        action = QAction(self.app.ui.save_as_icon, "Save as")
         action.setToolTip("Save as")
-        action.setStatusTip("Save as")
+        action.setStatusTip("Save as new image")
         action.setShortcuts(["Ctrl+Shift+S"])
         return action
 
@@ -145,21 +154,19 @@ class WindowActions:
         action.setShortcuts(["Ctrl+P"])
         return action
 
-    # --
-
     @cached_property
     def settings(self):
         action = QAction(self.app.ui.settings_icon, "Settings")
-        action.setToolTip("Show Setting Window")
-        action.setToolTip("Show Setting Window")
+        action.setToolTip("Setting window")
+        action.setToolTip("Show setting window")
         action.setShortcuts(["Ctrl+,"])
         return action
 
     @cached_property
     def slideshow(self):
         action = QAction(self.app.ui.slideshow_icon, "Slide Show")
-        action.setToolTip("Play Slideshow")
-        action.setStatusTip("Play Slideshow")
+        action.setToolTip("Slide Show")
+        action.setStatusTip("Play slideshow")
         action.setShortcuts(["Alt+Return", "F11"])
         action.setCheckable(True)
         return action
