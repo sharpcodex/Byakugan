@@ -14,12 +14,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.app = app_manager
         self.images_list = images_list
 
+        self.window_moving = False
         self.win_old_pos = None
         self.lbl_old_pos = None
-        self.window_moving = False
 
         self.image = next(self.images_list)
-        self.image_size_policy = 'fit_auto'
+        self.viewer_policy = {"scale": 'fit_auto'}
 
         # Init UI
         self.actions = WindowActions(self.app)
@@ -30,9 +30,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.mouseDoubleClickEvent = self.label_double_click_event
         self.label.mousePressEvent = self.label_mouse_press_event
         self.label.mouseMoveEvent = self.label_mouse_move_event
-
-        # Startup
-        self.startup()
 
     def init_ui(self):
         # Setup: window
@@ -57,6 +54,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.reload.triggered.connect(self.reload_action)
         self.actions.info.triggered.connect(self.info_action)
         self.actions.print.triggered.connect(self.print_action)
+        self.actions.save.triggered.connect(self.save_action)
+        self.actions.save_as.triggered.connect(self.save_as_action)
         self.actions.delete_item.triggered.connect(self.delete_action)
         self.actions.settings.triggered.connect(self.settings_action)
         self.actions.help.triggered.connect(self.help_action)
@@ -86,6 +85,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.flip_horizontally)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.actions.reload)
+        self.toolbar.addAction(self.actions.info)
         self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addAction(self.actions.minimize)
@@ -108,6 +108,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.reload)
         self.label.addAction(self.actions.info)
         self.label.addAction(self.actions.print)
+        self.label.addAction(self.actions.save)
+        self.label.addAction(self.actions.save_as)
         self.label.addAction(self.actions.delete_item)
         self.label.addAction(self.actions.settings)
         self.label.addAction(self.actions.help)
@@ -117,9 +119,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         # Restore last window state
         self._restore_geometry()
 
-    def startup(self):
-        # Show first image
-        self.repaint_image()
+    def repaint_image(self):
+        width = self.centralWidget().width() - 2
+        height = self.centralWidget().height() - 2
+        pixmap = self.image.pixmap(self.viewer_policy, width, height)
+        self.label.setPixmap(pixmap)
 
     # Actions
     def previous_action(self):
@@ -127,16 +131,18 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.repaint_image()
 
     def next_action(self):
-        self.image = next(self.images_list)
+        self.image = self.images_list.__next__()
         self.repaint_image()
 
     def zoom_in_action(self):
         self.image.zoom_in()
-        self.original_size()
+        self.repaint_image()
+        self._center_label()
 
     def zoom_out_action(self):
         self.image.zoom_out()
-        self.original_size()
+        self.repaint_image()
+        self._center_label()
 
     def rotate_right_action(self):
         self.image.rotate_right()
@@ -156,9 +162,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def fit_to_window(self):
         if self.actions.fit_to_window.isChecked():
-            self.image_size_policy = 'fit_to_window'
+            self.viewer_policy["scale"] = 'fit_to_window'
         else:
-            self.image_size_policy = 'fit_auto'
+            self.viewer_policy["scale"] = 'fit_auto'
 
         self.actions.fit_to_width.setChecked(False)
         self.actions.fit_to_height.setChecked(False)
@@ -168,9 +174,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def fit_to_width(self):
         if self.actions.fit_to_width.isChecked():
-            self.image_size_policy = 'fit_to_width'
+            self.viewer_policy["scale"] = 'fit_to_width'
         else:
-            self.image_size_policy = 'fit_auto'
+            self.viewer_policy["scale"] = 'fit_auto'
 
         self.actions.fit_to_window.setChecked(False)
         self.actions.fit_to_height.setChecked(False)
@@ -180,9 +186,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def fit_to_height(self):
         if self.actions.fit_to_height.isChecked():
-            self.image_size_policy = 'fit_to_height'
+            self.viewer_policy["scale"] = 'fit_to_height'
         else:
-            self.image_size_policy = 'fit_auto'
+            self.viewer_policy["scale"] = 'fit_auto'
 
         self.actions.fit_to_window.setChecked(False)
         self.actions.fit_to_width.setChecked(False)
@@ -192,9 +198,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def original_size(self):
         if self.actions.show_original_size.isChecked():
-            self.image_size_policy = 'original_size'
+            self.viewer_policy["scale"] = 'original_size'
         else:
-            self.image_size_policy = 'fit_auto'
+            self.viewer_policy["scale"] = 'fit_auto'
 
         self.actions.fit_to_window.setChecked(False)
         self.actions.fit_to_width.setChecked(False)
@@ -204,6 +210,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def info_action(self):
         print("info")
+
+    def save_action(self):
+        print("save_as")
 
     def save_as_action(self):
         print("save_as")
@@ -242,19 +251,18 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def exit_action(self):
         if self.isFullScreen():
             self._show_normal()
-        self._save_geometry()
-        self.close()
-        self.app.quit()
+        else:
+            self._save_geometry()
+            self.close()
+            self.app.quit()
 
     # Events
 
+    def resizeEvent(self, event):
+        self.repaint_image()
+
     def label_double_click_event(self, event):
-        xr = event.pos().x() / self.label.width()
-        h_max = self.scrollArea.horizontalScrollBar().maximum()
-        yr = event.pos().y() / self.label.height()
-        v_max = self.scrollArea.verticalScrollBar().maximum()
-        self.scrollArea.horizontalScrollBar().setValue(h_max * xr)
-        self.scrollArea.verticalScrollBar().setValue(v_max * yr)
+        self._reset_viewer()
 
     def label_mouse_press_event(self, event):
         if event.button() == Qt.LeftButton:
@@ -290,12 +298,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     # Helpers
 
-    def repaint_image(self):
-        w = self.centralWidget().width() - 2
-        h = self.centralWidget().height() - 2
-        pixmap = self.image.pixmap(self.image_size_policy, w, h)
-        self.label.setPixmap(pixmap)
-
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
 
@@ -304,18 +306,15 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.maximize.setIcon(self.app.ui.maximize_icon)
         self.actions.minimize.setVisible(True)
         self.actions.maximize.setVisible(True)
-        self.repaint_image()
 
     def _show_maximized(self):
         self.showMaximized()
         self.actions.maximize.setIcon(self.app.ui.restore_icon)
-        self.repaint_image()
 
     def _show_fullscreen(self):
         self.showFullScreen()
         self.actions.minimize.setVisible(False)
         self.actions.maximize.setVisible(False)
-        self.repaint_image()
 
     def _save_geometry(self):
         geometry = self.saveGeometry()
@@ -347,3 +346,20 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         frame_geometry = self.frameGeometry()
         frame_geometry.moveCenter(self.app.ui.screen_center)
         self.move(frame_geometry.topLeft())
+
+    def _center_label(self):
+        h_max = self.scrollArea.horizontalScrollBar().maximum()
+        v_max = self.scrollArea.verticalScrollBar().maximum()
+        self.scrollArea.horizontalScrollBar().setValue(h_max / 2)
+        self.scrollArea.verticalScrollBar().setValue(v_max / 2)
+
+    def _reset_viewer(self):
+        self.viewer_policy["scale"] = 'fit_auto'
+        self.image.reload()
+
+        self.actions.fit_to_window.setChecked(False)
+        self.actions.fit_to_width.setChecked(False)
+        self.actions.fit_to_height.setChecked(False)
+        self.actions.show_original_size.setChecked(False)
+
+        self.repaint_image()

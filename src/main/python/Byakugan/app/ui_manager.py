@@ -75,15 +75,15 @@ class UiManager:
 
     @cached_property
     def save_icon(self):
-        return qta.icon('mdi.content-save', color=self.color, color_active=self.active_color)
+        return qta.icon('mdi.content-save-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def save_as_icon(self):
-        return qta.icon('mdi.content-save-move', color=self.color, color_active=self.active_color)
+        return qta.icon('mdi.content-save-move-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def reload_icon(self):
-        return qta.icon('mdi.folder-sync-outline', color=self.color, color_active=self.active_color)
+        return qta.icon('mdi.sync', color=self.color, color_active=self.active_color)
 
     @cached_property
     def delete_icon(self):
