@@ -71,7 +71,7 @@ class WindowActions:
         action = QAction(self.app.ui.zoom_in_icon, "Zoom in")
         action.setToolTip("Zoom in")
         action.setStatusTip("Zoom in")
-        action.setShortcuts(["Ctrl++", "Ctrl+=", "Up"])
+        action.setShortcuts(["Ctrl++", "Ctrl+=", "Ctrl+Up"])
         return action
 
     @cached_property
@@ -79,23 +79,39 @@ class WindowActions:
         action = QAction(self.app.ui.zoom_out_icon, "Zoom out")
         action.setToolTip("Zoom out")
         action.setStatusTip("Zoom out")
-        action.setShortcuts(["Ctrl+-", "Ctrl+_", "Down"])
+        action.setShortcuts(["Ctrl+-", "Ctrl+_", "Ctrl+Down"])
         return action
 
     @cached_property
-    def rotate(self):
-        action = QAction(self.app.ui.rotate_icon, "Rotate")
-        action.setToolTip("Rotate")
+    def rotate_right(self):
+        action = QAction(self.app.ui.rotate_right_icon, "RotateClockwise")
+        action.setToolTip("Rotate clockwise")
         action.setStatusTip("Rotate image clockwise")
-        action.setShortcuts(["Ctrl+Down"])
+        action.setShortcuts(["Alt+Right"])
         return action
 
     @cached_property
-    def flip(self):
-        action = QAction(self.app.ui.flip_icon, "Flip")
-        action.setToolTip("Flip")
+    def rotate_left(self):
+        action = QAction(self.app.ui.rotate_left_icon, "RotateCounterclockwise")
+        action.setToolTip("Rotate counterclockwise")
+        action.setStatusTip("Rotate image counterclockwise")
+        action.setShortcuts(["Alt+Left"])
+        return action
+
+    @cached_property
+    def flip_vertically(self):
+        action = QAction(self.app.ui.flip_vertically_icon, "FlipVertically")
+        action.setToolTip("Flip vertically")
+        action.setStatusTip("Flip image vertically")
+        action.setShortcuts(["Alt+Up"])
+        return action
+
+    @cached_property
+    def flip_horizontally(self):
+        action = QAction(self.app.ui.flip_horizontally_icon, "FlipHorizontally")
+        action.setToolTip("Flip horizontally")
         action.setStatusTip("Flip image horizontally")
-        action.setShortcuts(["Ctrl+Right"])
+        action.setShortcuts(["Alt+Down"])
         return action
 
     @cached_property
@@ -139,6 +155,14 @@ class WindowActions:
         return action
 
     @cached_property
+    def reload(self):
+        action = QAction(self.app.ui.reload_icon, "Reload")
+        action.setToolTip("Reload")
+        action.setStatusTip("Reload file from disk")
+        action.setShortcuts(["Ctrl+R"])
+        return action
+
+    @cached_property
     def delete_item(self):
         action = QAction(self.app.ui.delete_icon, "Delete")
         action.setToolTip("Delete")
@@ -160,6 +184,14 @@ class WindowActions:
         action.setToolTip("Setting window")
         action.setToolTip("Show setting window")
         action.setShortcuts(["Ctrl+,"])
+        return action
+
+    @cached_property
+    def help(self):
+        action = QAction(self.app.ui.help_icon, "Help")
+        action.setToolTip("Help")
+        action.setToolTip("Show help window")
+        action.setShortcuts(["F1"])
         return action
 
     @cached_property

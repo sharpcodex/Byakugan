@@ -1,5 +1,4 @@
 from qtpy.QtCore import Qt, QPoint
-from qtpy.QtGui import QPixmap
 from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
@@ -51,12 +50,16 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.show_original_size.triggered.connect(self.original_size)
         self.actions.zoom_in.triggered.connect(self.zoom_in_action)
         self.actions.zoom_out.triggered.connect(self.zoom_out_action)
-        self.actions.rotate.triggered.connect(self.rotate_action)
-        self.actions.flip.triggered.connect(self.flip_action)
+        self.actions.rotate_right.triggered.connect(self.rotate_right_action)
+        self.actions.rotate_left.triggered.connect(self.rotate_left_action)
+        self.actions.flip_vertically.triggered.connect(self.flip_vertically_action)
+        self.actions.flip_horizontally.triggered.connect(self.flip_horizontally_action)
+        self.actions.reload.triggered.connect(self.reload_action)
         self.actions.info.triggered.connect(self.info_action)
         self.actions.print.triggered.connect(self.print_action)
         self.actions.delete_item.triggered.connect(self.delete_action)
         self.actions.settings.triggered.connect(self.settings_action)
+        self.actions.help.triggered.connect(self.help_action)
         self.actions.slideshow.triggered.connect(self.slideshow_action)
         self.actions.minimize.triggered.connect(self.minimize_action)
         self.actions.maximize.triggered.connect(self.maximize_action)
@@ -77,8 +80,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.zoom_in)
         self.toolbar.addAction(self.actions.zoom_out)
         self.toolbar.addSeparator()
-        self.toolbar.addAction(self.actions.rotate)
-        self.toolbar.addAction(self.actions.flip)
+        self.toolbar.addAction(self.actions.rotate_right)
+        self.toolbar.addAction(self.actions.rotate_left)
+        self.toolbar.addAction(self.actions.flip_vertically)
+        self.toolbar.addAction(self.actions.flip_horizontally)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.actions.reload)
         self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addAction(self.actions.minimize)
@@ -94,12 +101,16 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.show_original_size)
         self.label.addAction(self.actions.zoom_in)
         self.label.addAction(self.actions.zoom_out)
-        self.label.addAction(self.actions.rotate)
-        self.label.addAction(self.actions.flip)
+        self.label.addAction(self.actions.rotate_right)
+        self.label.addAction(self.actions.rotate_left)
+        self.label.addAction(self.actions.flip_vertically)
+        self.label.addAction(self.actions.flip_horizontally)
+        self.label.addAction(self.actions.reload)
         self.label.addAction(self.actions.info)
         self.label.addAction(self.actions.print)
         self.label.addAction(self.actions.delete_item)
         self.label.addAction(self.actions.settings)
+        self.label.addAction(self.actions.help)
         self.label.addAction(self.actions.slideshow)
         self.label.addAction(self.actions.exit)
 
@@ -120,16 +131,28 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.repaint_image()
 
     def zoom_in_action(self):
-        print("zoomin")
+        self.image.zoom_in()
+        self.original_size()
 
     def zoom_out_action(self):
-        print("zoomout")
+        self.image.zoom_out()
+        self.original_size()
 
-    def rotate_action(self):
-        print("rotate")
+    def rotate_right_action(self):
+        self.image.rotate_right()
+        self.repaint_image()
 
-    def flip_action(self):
-        print("flip")
+    def rotate_left_action(self):
+        self.image.rotate_left()
+        self.repaint_image()
+
+    def flip_vertically_action(self):
+        self.image.flip_vertically()
+        self.repaint_image()
+
+    def flip_horizontally_action(self):
+        self.image.flip_horizontally()
+        self.repaint_image()
 
     def fit_to_window(self):
         if self.actions.fit_to_window.isChecked():
@@ -185,6 +208,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def save_as_action(self):
         print("save_as")
 
+    def reload_action(self):
+        self.image.reload()
+        self.repaint_image()
+
     def print_action(self):
         print("print")
 
@@ -193,6 +220,9 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def settings_action(self):
         print("settings")
+
+    def help_action(self):
+        print("help")
 
     def slideshow_action(self):
         if self.isFullScreen():

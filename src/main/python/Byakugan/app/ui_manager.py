@@ -46,12 +46,20 @@ class UiManager:
         return qta.icon('mdi.magnify-minus-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
-    def rotate_icon(self):
+    def rotate_right_icon(self):
         return qta.icon('mdi.axis-x-rotate-clockwise', color=self.color, color_active=self.active_color)
 
     @cached_property
-    def flip_icon(self):
-        return qta.icon('mdi.axis-z-rotate-counterclockwise', color=self.color, color_active=self.active_color)
+    def rotate_left_icon(self):
+        return qta.icon('mdi.axis-x-rotate-counterclockwise', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def flip_vertically_icon(self):
+        return qta.icon('mdi.axis-y-rotate-clockwise', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def flip_horizontally_icon(self):
+        return qta.icon('mdi.axis-z-rotate-clockwise', color=self.color, color_active=self.active_color)
 
     @cached_property
     def info_icon(self):
@@ -74,6 +82,10 @@ class UiManager:
         return qta.icon('mdi.content-save-move', color=self.color, color_active=self.active_color)
 
     @cached_property
+    def reload_icon(self):
+        return qta.icon('mdi.folder-sync-outline', color=self.color, color_active=self.active_color)
+
+    @cached_property
     def delete_icon(self):
         return qta.icon('mdi.delete', color=self.color, color_active=self.active_color)
 
@@ -84,6 +96,10 @@ class UiManager:
     @cached_property
     def settings_icon(self):
         return qta.icon('mdi.settings', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def help_icon(self):
+        return qta.icon('mdi.help-rhombus-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def slideshow_icon(self):
@@ -104,12 +120,6 @@ class UiManager:
     @cached_property
     def exit_icon(self):
         return qta.icon('mdi.window-close', color=self.color, color_active=self.active_color)
-
-    def maximize_restore_icon(self, is_maximized):
-        if is_maximized:
-            return self.restore_icon
-        else:
-            return self.maximize_icon
 
     @cached_property
     def window_icon(self):
