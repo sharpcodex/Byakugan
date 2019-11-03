@@ -3,7 +3,6 @@ from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
-from gui.windows.viewer_help import ViewerHelpDialog
 
 
 class ViewerWindow(QMainWindow, Ui_ViewerWindow):
@@ -54,12 +53,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.flip_horizontally.triggered.connect(self.flip_horizontally_action)
         self.actions.reload.triggered.connect(self.reload_action)
         self.actions.info.triggered.connect(self.info_action)
-        self.actions.print.triggered.connect(self.print_action)
-        self.actions.save.triggered.connect(self.save_action)
-        self.actions.save_as.triggered.connect(self.save_as_action)
-        self.actions.delete_item.triggered.connect(self.delete_action)
         self.actions.settings.triggered.connect(self.settings_action)
-        self.actions.help.triggered.connect(self.help_action)
         self.actions.slideshow.triggered.connect(self.slideshow_action)
         self.actions.minimize.triggered.connect(self.minimize_action)
         self.actions.maximize.triggered.connect(self.maximize_action)
@@ -108,12 +102,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.flip_horizontally)
         self.label.addAction(self.actions.reload)
         self.label.addAction(self.actions.info)
-        self.label.addAction(self.actions.print)
-        self.label.addAction(self.actions.save)
-        self.label.addAction(self.actions.save_as)
-        self.label.addAction(self.actions.delete_item)
         self.label.addAction(self.actions.settings)
-        self.label.addAction(self.actions.help)
         self.label.addAction(self.actions.slideshow)
         self.label.addAction(self.actions.exit)
 
@@ -212,29 +201,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def info_action(self):
         print("info")
 
-    def save_action(self):
-        print("save_as")
-
-    def save_as_action(self):
-        print("save_as")
-
     def reload_action(self):
         self.image.reload()
         self.repaint_image()
 
-    def print_action(self):
-        print("print")
-
-    def delete_action(self):
-        print("delete")
-
     def settings_action(self):
         print("settings")
-
-    @staticmethod
-    def help_action():
-        help_dialog = ViewerHelpDialog()
-        help_dialog.exec_()
 
     def slideshow_action(self):
         if self.isFullScreen():
