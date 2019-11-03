@@ -36,7 +36,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def init_ui(self):
         # Setup: window
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setWindowTitle(self.app.app_name)
+        self.setWindowTitle(self.app.settings.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
         self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
 
@@ -314,13 +314,13 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.app.settings.set('viewer_window_geometry', geometry)
 
     def _restore_geometry(self):
-        show_status_bar = self.app.settings.get('vui_show_status_bar', False, bool)
-        load_geometry = self.app.settings.get('vui_save_window_geometry', False, bool)
+        show_status_bar = self.app.settings.read('vui_show_status_bar', False, bool)
+        load_geometry = self.app.settings.read('vui_save_window_geometry', False, bool)
 
         self.statusbar.setVisible(show_status_bar)
 
         if load_geometry:
-            last_geometry = self.app.settings.get_value('viewer_window_geometry', '')
+            last_geometry = self.app.settings.get('viewer_window_geometry', '')
             try:
                 self.restoreGeometry(last_geometry)
                 if self.isMaximized():

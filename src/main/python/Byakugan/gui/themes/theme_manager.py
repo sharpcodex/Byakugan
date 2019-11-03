@@ -1,4 +1,3 @@
-from qtpy.QtCore import QSettings
 from qtpy.QtGui import QPalette, QColor
 
 from gui.themes.modern_windows import ModernWindow
@@ -10,7 +9,7 @@ class ThemeManager:
 
     # Style
     def setup(self, window):
-        app_theme = QSettings().value('app_theme', 'modern-dark', type=str)
+        app_theme = self.app.settings.app_theme
         if app_theme == 'modern-dark':
             self.apply_dark_theme()
             return ModernWindow(window, self.app)

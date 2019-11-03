@@ -3,7 +3,8 @@ from qtpy.QtGui import QColor, QIcon
 from qtpy.QtWidgets import QDesktopWidget
 import qtawesome as qta
 
-from app.defaults import *
+WINDOW_HEIGHT_P = 0.6
+WINDOW_WIDTH_P = 0.5
 
 
 class UiManager:
@@ -136,11 +137,11 @@ class UiManager:
     # -------------- Theme -----------------------
     @cached_property
     def app_theme(self):
-        return self.settings.get('app_theme', DEFAULT_APP_THEME, str)
+        return self.settings.read('app_theme', self.settings.app_theme, str)
 
     @cached_property
     def app_color(self):
-        return self.settings.get('app_color', DEFAULT_APP_COLOR, str)
+        return self.settings.read('app_color', self.settings.app_color, str)
 
     @cached_property
     def color(self):
@@ -188,11 +189,11 @@ class UiManager:
 
     @cached_property
     def best_window_width(self):
-        return self.screen_width * VUI_WINDOW_WIDTH_P
+        return self.screen_width * WINDOW_WIDTH_P
 
     @cached_property
     def best_window_height(self):
-        return self.screen_height * VUI_WINDOW_HEIGHT_P
+        return self.screen_height * WINDOW_HEIGHT_P
 
     # Helpers
 

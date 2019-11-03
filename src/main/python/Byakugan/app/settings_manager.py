@@ -1,59 +1,59 @@
-import sys
-
+from fbs_runtime.application_context import cached_property
 from qtpy.QtCore import QCoreApplication, QSettings
 
-from app.defaults import *
+SETTINGS_RESET = False
+APPLICATION_NAME = 'Byakugan'
+
+defaults = {
+
+    'app_theme': 'modern-dark',  # modern-dark, modern-light,Compact or classic
+    'app_color': 'black',  # red, green,blue, yellow, Black or White
+    'app_name': 'Byakugan',
+    'organization_name': 'Thaka',
+    'organization_domain': 'Thaka.sd',
+    'vui_show_status_bar': False,  # True or False
+    'vui_save_window_geometry': False  # True or False
+}
 
 
 class SettingsManager:
     def __init__(self):
-        QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
-        QCoreApplication.setOrganizationDomain(ORGANIZATION_DOMAIN)
+        QCoreApplication.setOrganizationName(defaults['organization_name'])
+        QCoreApplication.setOrganizationDomain(defaults['organization_domain'])
         QCoreApplication.setApplicationName(APPLICATION_NAME)
 
-        try:
-            self.settings = QSettings()
-            if self.settings.value('app_name', type=str) != APPLICATION_NAME:
-                self._fill_defaults()
-        except (QSettings.AccessError, QSettings.FormatError):
-            SettingsManager.error_box()
+        self.settings = QSettings()
+        if self.settings.value('app_name', type=str) != APPLICATION_NAME or SETTINGS_RESET is True:
+            for key, value in defaults.items():
+                self.set(key, value)
 
     def set(self, key, value):
         try:
             self.settings.setValue(key, value)
         except (QSettings.AccessError, QSettings.FormatError):
-            SettingsManager.error_box()
+            pass
 
-    def get(self, key, default_value, value_type):
+    def get(self, key, default_value=None):
+        default = default_value if default_value is not None else defaults[key]
+        try:
+            return self.settings.value(key, default)
+        except (QSettings.AccessError, QSettings.FormatError):
+            return default
+
+    def read(self, key, default_value, value_type):
         try:
             return self.settings.value(key, default_value, type=value_type)
         except (QSettings.AccessError, QSettings.FormatError):
-            SettingsManager.error_box()
+            return default_value
 
-    def get_value(self, key, default_value):
-        try:
-            return self.settings.value(key, default_value)
-        except (QSettings.AccessError, QSettings.FormatError):
-            SettingsManager.error_box()
+    @cached_property
+    def app_name(self):
+        return self.get('app_name')
 
-    def _fill_defaults(self):
-        # App Info
-        self.settings.setValue('app_name', APPLICATION_NAME)
-        self.settings.setValue('organization_domain', ORGANIZATION_DOMAIN)
-        self.settings.setValue('organization_name', ORGANIZATION_NAME)
-        # Theme
-        self.settings.setValue('app_theme', DEFAULT_APP_THEME)  # modern-dark, modern-light or classic
-        self.settings.setValue('app_color', DEFAULT_APP_COLOR)  # green, red, yellow or classic
-        # Viewer Window
-        self.settings.setValue('vui_show_status_bar', VUI_SHOW_STATUS_BAR)  # green, red, yellow or classic
-        self.settings.setValue('vui_save_window_geometry', VUI_SAVE_WINDOW_GEOMETRY)  # green, red, yellow or classic
+    @cached_property
+    def app_theme(self):
+        return self.get('app_theme')
 
-    @staticmethod
-    def error_box():
-        from qtpy.QtWidgets import qApp
-        import pymsgbox
-        pymsgbox.alert(text='can not access settings file, try to reinstall the application',
-                       title='Fatal Error',
-                       button='Exit')
-        qApp.quit()
-        sys.exit(-1)
+    @cached_property
+    def app_color(self):
+        return self.get('app_color')

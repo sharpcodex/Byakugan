@@ -2,8 +2,6 @@ from fbs_runtime.application_context import cached_property
 from qtpy import QT_VERSION
 from qtpy.QtCore import QCoreApplication
 
-from app.defaults import *
-
 
 class AppManager:
     def __init__(self, ctx, settings_manager, ui_manager):
@@ -17,10 +15,6 @@ class AppManager:
     @staticmethod
     def quit():
         QCoreApplication.instance().quit()
-
-    @cached_property
-    def app_name(self):
-        return self.settings.get('app_name', APPLICATION_NAME, str)
 
     @cached_property
     def qt_version(self):

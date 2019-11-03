@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from app.defaults import IMG_EXTENSIONS
+IMG_EXTENSIONS = ['*.bmp', '*.png', '*.jpg', '*.jpeg', '*.jpe']
 
 
 class PathHelpers:
