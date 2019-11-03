@@ -7,40 +7,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
-    <height>295</height>
+    <width>431</width>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About qBittorrent</string>
+   <string>About Byakugan</string>
   </property>
   <layout class="QVBoxLayout" name="aboutDlgLayout">
    <item>
-    <layout class="QHBoxLayout" name="titleHBoxLayout">
-     <item>
-      <widget class="QLabel" name="logo"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelName">
-       <property name="text">
-        <string notr="true">qBittorrent</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_6">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+    <layout class="QHBoxLayout" name="titleHBoxLayout"/>
    </item>
    <item>
     <widget class="QTabWidget" name="tw_tabs">
@@ -87,55 +63,14 @@
           <string>Current maintainer</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Greece</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string notr="true">&lt;a href=&quot;mailto:sledgehammer999@qbittorrent.org&quot;&gt;sledgehammer999@qbittorrent.org&lt;/a&gt;</string>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Nationality:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>E-mail:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Name:</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QLabel" name="label_17">
             <property name="text">
-             <string notr="true">Sledgehammer999</string>
+             <string notr="true">Abdalla Mohamed</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="1" column="2">
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -148,33 +83,17 @@
             </property>
            </spacer>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Original author</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Name:</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="label_7">
+           <widget class="QLabel" name="label_19">
             <property name="text">
-             <string>France</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string notr="true">Christophe Dumez</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string notr="true">&lt;a href=&quot;mailto:chris@qbittorrent.org&quot;&gt;chris@qbittorrent.org&lt;/a&gt;</string>
+             <string notr="true">&lt;a href=&quot;mailto:sharpcodex@gmail.com&quot;&gt;sharpcodex@gmail.com&lt;/a&gt;</string>
             </property>
             <property name="openExternalLinks">
              <bool>true</bool>
@@ -184,39 +103,12 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Name:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_5">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_16">
             <property name="text">
              <string>E-mail:</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Nationality:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
@@ -322,7 +214,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>qBittorrent was built with the following libraries:</string>
+          <string>Byakugan was built with the following libraries:</string>
          </property>
         </widget>
        </item>
@@ -335,14 +227,21 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="2" column="2">
+         <item row="4" column="1">
+          <widget class="QLabel" name="labelZlibVer">
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
           <widget class="QLabel" name="labelBoostVer">
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
+         <item row="1" column="2">
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -355,13 +254,72 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_8">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_10">
            <property name="text">
-            <string notr="true">Qt:</string>
+            <string notr="true">qtawesome</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string notr="true">Qt</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string notr="true">OpenCV</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="labelQtVer">
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string notr="true">Lib</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string notr="true">Lib</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
            </property>
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
@@ -369,93 +327,14 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string notr="true">Libtorrent:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string notr="true">Boost:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="labelQtVer">
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
           <widget class="QLabel" name="labelLibtVer">
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
          <item row="3" column="1">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string notr="true">OpenSSL:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
           <widget class="QLabel" name="labelOpensslVer">
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string notr="true">zlib:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="2">
-          <widget class="QLabel" name="labelZlibVer">
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
            </property>

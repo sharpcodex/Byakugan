@@ -98,8 +98,16 @@ class UiManager:
         return qta.icon('mdi.settings', color=self.color, color_active=self.active_color)
 
     @cached_property
+    def statusbar_icon(self):
+        return qta.icon('mdi.border-bottom-variant', color=self.color, color_active=self.active_color)
+
+    @cached_property
     def help_icon(self):
         return qta.icon('mdi.help-rhombus-outline', color=self.color, color_active=self.active_color)
+
+    @cached_property
+    def about_icon(self):
+        return qta.icon('mdi.information-outline', color=self.color, color_active=self.active_color)
 
     @cached_property
     def slideshow_icon(self):

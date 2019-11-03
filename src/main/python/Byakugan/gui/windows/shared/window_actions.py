@@ -187,11 +187,28 @@ class WindowActions:
         return action
 
     @cached_property
+    def show_statusbar(self):
+        action = QAction(self.app.ui.statusbar_icon, "Show Statusbar")
+        action.setToolTip("Show Statusbar")
+        action.setToolTip("Show Statusbar")
+        action.setShortcuts(["Ctrl+."])
+        action.setCheckable(True)
+        return action
+
+    @cached_property
     def help(self):
         action = QAction(self.app.ui.help_icon, "Help")
         action.setToolTip("Help")
         action.setToolTip("Show help window")
         action.setShortcuts(["F1"])
+        return action
+
+    @cached_property
+    def about(self):
+        action = QAction(self.app.ui.about_icon, "About")
+        action.setToolTip("About")
+        action.setToolTip("About this application")
+        action.setShortcuts(["F2"])
         return action
 
     @cached_property

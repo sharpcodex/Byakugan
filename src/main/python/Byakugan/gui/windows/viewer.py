@@ -3,7 +3,7 @@ from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
-from gui.windows.viewer_settings import ViewerSettingsDialog
+from gui.windows.about import AboutDialog
 
 
 class ViewerWindow(QMainWindow, Ui_ViewerWindow):
@@ -53,10 +53,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.flip_vertically.triggered.connect(self.flip_vertically_action)
         self.actions.flip_horizontally.triggered.connect(self.flip_horizontally_action)
         self.actions.reload.triggered.connect(self.reload_action)
-        self.actions.settings.triggered.connect(self.settings_action)
+        self.actions.show_statusbar.triggered.connect(self.show_statusbar_action)
         self.actions.slideshow.triggered.connect(self.slideshow_action)
         self.actions.minimize.triggered.connect(self.minimize_action)
         self.actions.maximize.triggered.connect(self.maximize_action)
+        self.actions.about.triggered.connect(self.about_action)
         self.actions.exit.triggered.connect(self.exit_action)
 
         # Setup: toolbar
@@ -81,6 +82,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.actions.reload)
         self.toolbar.addWidget(self.actions.separator)
+        self.toolbar.addAction(self.actions.show_statusbar)
         self.toolbar.addAction(self.actions.slideshow)
         self.toolbar.addAction(self.actions.minimize)
         self.toolbar.addAction(self.actions.maximize)
@@ -100,12 +102,16 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.flip_vertically)
         self.label.addAction(self.actions.flip_horizontally)
         self.label.addAction(self.actions.reload)
-        self.label.addAction(self.actions.settings)
+        self.label.addAction(self.actions.show_statusbar)
         self.label.addAction(self.actions.slideshow)
+        self.label.addAction(self.actions.about)
         self.label.addAction(self.actions.exit)
 
         # Restore last window state
         self._restore_geometry()
+
+    def update_ui_settings(self):
+        pass
 
     def repaint_image(self):
         width = self.centralWidget().width() - 2
@@ -200,9 +206,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.image.reload()
         self.repaint_image()
 
-    def settings_action(self):
-        help_dialog = ViewerSettingsDialog()
-        help_dialog.exec_()
+    def show_statusbar_action(self):
+        if self.actions.show_statusbar.isChecked():
+            self.statusbar.show()
+        else:
+            self.statusbar.hide()
+        self.repaint_image()
 
     def slideshow_action(self):
         if self.isFullScreen():
@@ -219,6 +228,11 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         else:
             self._show_maximized()
 
+    @staticmethod
+    def about_action():
+        help_dialog = AboutDialog()
+        help_dialog.exec_()
+
     def exit_action(self):
         if self.isFullScreen():
             self._show_normal()
@@ -232,7 +246,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def resizeEvent(self, event):
         self.repaint_image()
 
-    def label_double_click_event(self, event):
+    def label_double_click_event(self):
         self._reset_viewer()
 
     def label_mouse_press_event(self, event):
