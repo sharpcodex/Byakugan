@@ -71,7 +71,7 @@ class WindowActions:
         action = QAction(self.app.ui.zoom_in_icon, "Zoom in")
         action.setToolTip("Zoom in")
         action.setStatusTip("Zoom in")
-        action.setShortcuts(["Ctrl++", "Ctrl+=", "Ctrl+Up"])
+        action.setShortcuts(["Ctrl+Up", "Ctrl++", "Ctrl+="])
         return action
 
     @cached_property
@@ -79,12 +79,12 @@ class WindowActions:
         action = QAction(self.app.ui.zoom_out_icon, "Zoom out")
         action.setToolTip("Zoom out")
         action.setStatusTip("Zoom out")
-        action.setShortcuts(["Ctrl+-", "Ctrl+_", "Ctrl+Down"])
+        action.setShortcuts(["Ctrl+Down", "Ctrl+-", "Ctrl+_"])
         return action
 
     @cached_property
     def rotate_right(self):
-        action = QAction(self.app.ui.rotate_right_icon, "RotateClockwise")
+        action = QAction(self.app.ui.rotate_right_icon, "Rotate Clockwise")
         action.setToolTip("Rotate clockwise")
         action.setStatusTip("Rotate image clockwise")
         action.setShortcuts(["Alt+Right"])
@@ -92,7 +92,7 @@ class WindowActions:
 
     @cached_property
     def rotate_left(self):
-        action = QAction(self.app.ui.rotate_left_icon, "RotateCounterclockwise")
+        action = QAction(self.app.ui.rotate_left_icon, "Rotate Counterclockwise")
         action.setToolTip("Rotate counterclockwise")
         action.setStatusTip("Rotate image counterclockwise")
         action.setShortcuts(["Alt+Left"])
@@ -100,7 +100,7 @@ class WindowActions:
 
     @cached_property
     def flip_vertically(self):
-        action = QAction(self.app.ui.flip_vertically_icon, "FlipVertically")
+        action = QAction(self.app.ui.flip_vertically_icon, "Flip Vertically")
         action.setToolTip("Flip vertically")
         action.setStatusTip("Flip image vertically")
         action.setShortcuts(["Alt+Up"])
@@ -108,7 +108,7 @@ class WindowActions:
 
     @cached_property
     def flip_horizontally(self):
-        action = QAction(self.app.ui.flip_horizontally_icon, "FlipHorizontally")
+        action = QAction(self.app.ui.flip_horizontally_icon, "Flip Horizontally")
         action.setToolTip("Flip horizontally")
         action.setStatusTip("Flip image horizontally")
         action.setShortcuts(["Alt+Down"])
@@ -148,7 +148,7 @@ class WindowActions:
 
     @cached_property
     def save_as(self):
-        action = QAction(self.app.ui.save_as_icon, "Save as")
+        action = QAction(self.app.ui.save_as_icon, "Save As")
         action.setToolTip("Save as")
         action.setStatusTip("Save as new image")
         action.setShortcuts(["Ctrl+Shift+S"])
