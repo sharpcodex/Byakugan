@@ -52,7 +52,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.flip_vertically.triggered.connect(self.flip_vertically_action)
         self.actions.flip_horizontally.triggered.connect(self.flip_horizontally_action)
         self.actions.reload.triggered.connect(self.reload_action)
-        self.actions.info.triggered.connect(self.info_action)
         self.actions.settings.triggered.connect(self.settings_action)
         self.actions.slideshow.triggered.connect(self.slideshow_action)
         self.actions.minimize.triggered.connect(self.minimize_action)
@@ -197,9 +196,6 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.fit_to_height.setChecked(False)
 
         self.repaint_image()
-
-    def info_action(self):
-        print("info")
 
     def reload_action(self):
         self.image.reload()
