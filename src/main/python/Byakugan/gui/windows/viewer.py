@@ -3,6 +3,7 @@ from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
+from gui.windows.viewer_settings import ViewerSettingsDialog
 
 
 class ViewerWindow(QMainWindow, Ui_ViewerWindow):
@@ -200,7 +201,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.repaint_image()
 
     def settings_action(self):
-        print("settings")
+        help_dialog = ViewerSettingsDialog()
+        help_dialog.exec_()
 
     def slideshow_action(self):
         if self.isFullScreen():
