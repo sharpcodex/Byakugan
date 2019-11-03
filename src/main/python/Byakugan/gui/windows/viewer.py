@@ -3,6 +3,7 @@ from qtpy.QtWidgets import QMainWindow, QToolBar
 
 from gui.windows.shared.window_actions import WindowActions
 from gui.windows.ui.ui_viewer import Ui_ViewerWindow
+from gui.windows.settings import SettingsDialog
 from gui.windows.about import AboutDialog
 
 
@@ -55,6 +56,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.reload.triggered.connect(self.reload_action)
         self.actions.show_statusbar.triggered.connect(self.show_statusbar_action)
         self.actions.slideshow.triggered.connect(self.slideshow_action)
+        self.actions.settings.triggered.connect(self.settings_action)
         self.actions.minimize.triggered.connect(self.minimize_action)
         self.actions.maximize.triggered.connect(self.maximize_action)
         self.actions.about.triggered.connect(self.about_action)
@@ -104,6 +106,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.label.addAction(self.actions.reload)
         self.label.addAction(self.actions.show_statusbar)
         self.label.addAction(self.actions.slideshow)
+        self.label.addAction(self.actions.settings)
         self.label.addAction(self.actions.about)
         self.label.addAction(self.actions.exit)
 
@@ -229,9 +232,14 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
             self._show_maximized()
 
     @staticmethod
+    def settings_action():
+        dialog = SettingsDialog()
+        dialog.exec_()
+
+    @staticmethod
     def about_action():
-        help_dialog = AboutDialog()
-        help_dialog.exec_()
+        dialog = AboutDialog()
+        dialog.exec_()
 
     def exit_action(self):
         if self.isFullScreen():
@@ -246,7 +254,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def resizeEvent(self, event):
         self.repaint_image()
 
-    def label_double_click_event(self):
+    def label_double_click_event(self, _):
         self._reset_viewer()
 
     def label_mouse_press_event(self, event):
