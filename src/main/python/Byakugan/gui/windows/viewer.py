@@ -231,14 +231,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         else:
             self._show_maximized()
 
-    @staticmethod
-    def settings_action():
-        dialog = SettingsDialog()
+    def settings_action(self):
+        dialog = SettingsDialog(self.app)
         dialog.exec_()
 
-    @staticmethod
-    def about_action():
-        dialog = AboutDialog()
+    def about_action(self):
+        dialog = AboutDialog(self.app)
         dialog.exec_()
 
     def exit_action(self):
@@ -314,8 +312,8 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.app.settings.set('viewer_window_geometry', geometry)
 
     def _restore_geometry(self):
-        show_status_bar = self.app.settings.read('vui_show_status_bar', False, bool)
-        load_geometry = self.app.settings.read('vui_save_window_geometry', False, bool)
+        show_status_bar = self.app.settings.read('v_show_status_bar', False, bool)
+        load_geometry = self.app.settings.read('v_save_window_geometry', False, bool)
 
         self.statusbar.setVisible(show_status_bar)
 

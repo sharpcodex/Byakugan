@@ -1,50 +1,66 @@
 from fbs_runtime.application_context import cached_property
 from qtpy.QtCore import QCoreApplication, QSettings
 
-SETTINGS_RESET = False
 APPLICATION_NAME = 'Byakugan'
 
-defaults = {
-
-    'app_theme': 'modern-dark',  # modern-dark, modern-light,Compact or classic
-    'app_color': 'black',  # red, green,blue, yellow, Black or White
-    'app_name': 'Byakugan',
-    'organization_name': 'Thaka',
+settings_dict = {
+    # App Info
+    'app_name': APPLICATION_NAME,
     'organization_domain': 'Thaka.sd',
-    'vui_show_status_bar': False,  # True or False
-    'vui_save_window_geometry': False  # True or False
+    'organization_name': 'Thaka',
+    # Theme
+    'app_theme': 'Compact',  # Dark, Light, Compact or classic
+    'app_color': 'Black',  # Red, Green, Glue, Yellow, Black or White
+    'm_show_status_bar': False,  # True or False
+    'm_save_window_geometry': False,  # True or False
+    'v_show_status_bar': False,  # True or False
+    'v_save_window_geometry': False,  # True or False
+    'e_show_status_bar': False,  # True or False
+    'e_save_window_geometry': False,  # True or False
 }
 
 
 class SettingsManager:
     def __init__(self):
-        QCoreApplication.setOrganizationName(defaults['organization_name'])
-        QCoreApplication.setOrganizationDomain(defaults['organization_domain'])
-        QCoreApplication.setApplicationName(APPLICATION_NAME)
+        # settings config
+        QCoreApplication.setApplicationName(settings_dict['app_name'])
+        QCoreApplication.setOrganizationDomain(settings_dict['organization_domain'])
+        QCoreApplication.setOrganizationName(settings_dict['organization_name'])
 
         self.settings = QSettings()
-        if self.settings.value('app_name', type=str) != APPLICATION_NAME or SETTINGS_RESET is True:
-            for key, value in defaults.items():
+        # Fill defaults
+        if self.settings.value('app_name', type=str) != settings_dict['app_name']:
+            for key, value in settings_dict.items():
                 self.set(key, value)
 
     def set(self, key, value):
         try:
             self.settings.setValue(key, value)
         except (QSettings.AccessError, QSettings.FormatError):
-            pass
+            pass  # TODO : log errors
 
     def get(self, key, default_value=None):
-        default = default_value if default_value is not None else defaults[key]
+        default = default_value if default_value is not None else settings_dict[key]
         try:
             return self.settings.value(key, default)
         except (QSettings.AccessError, QSettings.FormatError):
             return default
 
-    def read(self, key, default_value, value_type):
+    def read(self, key, default_value=None, value_type=str):
         try:
             return self.settings.value(key, default_value, type=value_type)
         except (QSettings.AccessError, QSettings.FormatError):
             return default_value
+
+    def set_all(self, settings):
+        for key, value in settings.items():
+            self.set(key, value)
+
+    def get_all(self):
+        settings = {}
+        for key, _ in settings_dict.items():
+            settings[key] = self.get(key)
+        return settings
 
     @cached_property
     def app_name(self):

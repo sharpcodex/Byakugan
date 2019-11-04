@@ -54,7 +54,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="app_theme_combo">
                <property name="minimumSize">
                 <size>
                  <width>150</width>
@@ -95,7 +95,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_2">
+              <widget class="QComboBox" name="app_color_combo">
                <property name="minimumSize">
                 <size>
                  <width>150</width>
@@ -160,14 +160,14 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
-               <widget class="QCheckBox" name="checkBox_5">
+               <widget class="QCheckBox" name="m_show_status_bar_checkbox">
                 <property name="text">
                  <string>show status bar</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_6">
+               <widget class="QCheckBox" name="m_save_window_geometry_checkbox">
                 <property name="text">
                  <string>save window geometry</string>
                 </property>
@@ -183,14 +183,14 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
-               <widget class="QCheckBox" name="checkBox_3">
+               <widget class="QCheckBox" name="v_show_status_bar_checkbox">
                 <property name="text">
                  <string>show status bar</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_4">
+               <widget class="QCheckBox" name="v_save_window_geometry_checkbox">
                 <property name="text">
                  <string>save window geometry</string>
                 </property>
@@ -206,14 +206,14 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QCheckBox" name="checkBox">
+               <widget class="QCheckBox" name="e_show_status_bar_checkbox">
                 <property name="text">
                  <string>show status bar</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_2">
+               <widget class="QCheckBox" name="e_save_window_geometry_checkbox">
                 <property name="text">
                  <string>save window geometry</string>
                 </property>
@@ -227,11 +227,6 @@
         </layout>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>Tab 2</string>
-      </attribute>
      </widget>
     </widget>
    </item>
