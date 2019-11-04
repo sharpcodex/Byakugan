@@ -6,6 +6,8 @@ from gui.windows.ui.ui_viewer import Ui_ViewerWindow
 from gui.windows.settings import SettingsDialog
 from gui.windows.about import AboutDialog
 
+from app.settings_manager import *
+
 
 class ViewerWindow(QMainWindow, Ui_ViewerWindow):
     def __init__(self, app_manager, images_list, *args, **kwargs):
@@ -14,6 +16,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
         # Init self
         self.app = app_manager
+        self.settings = self.app.settings.get_viewer_settings()
         self.images_list = images_list
 
         self.window_moving = False
@@ -35,10 +38,10 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def init_ui(self):
         # Setup: window
-        self.setWindowFlags(Qt.FramelessWindowHint)
         self.setWindowTitle(self.app.settings.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
         self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
+        self.statusbar.setVisible(self.settings[V_SHOW_STATUS_BAR])
 
         # Setup: actions
         self.actions.previous.triggered.connect(self.previous_action)
@@ -61,6 +64,26 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.actions.maximize.triggered.connect(self.maximize_action)
         self.actions.about.triggered.connect(self.about_action)
         self.actions.exit.triggered.connect(self.exit_action)
+
+        # Setup: context menu
+        self.label.addAction(self.actions.previous)
+        self.label.addAction(self.actions.next)
+        self.label.addAction(self.actions.fit_to_window)
+        self.label.addAction(self.actions.fit_to_width)
+        self.label.addAction(self.actions.fit_to_height)
+        self.label.addAction(self.actions.show_original_size)
+        self.label.addAction(self.actions.zoom_in)
+        self.label.addAction(self.actions.zoom_out)
+        self.label.addAction(self.actions.rotate_right)
+        self.label.addAction(self.actions.rotate_left)
+        self.label.addAction(self.actions.flip_vertically)
+        self.label.addAction(self.actions.flip_horizontally)
+        self.label.addAction(self.actions.reload)
+        self.label.addAction(self.actions.show_statusbar)
+        self.label.addAction(self.actions.slideshow)
+        self.label.addAction(self.actions.settings)
+        self.label.addAction(self.actions.about)
+        self.label.addAction(self.actions.exit)
 
         # Setup: toolbar
         self.toolbar.setMovable(False)
@@ -86,35 +109,16 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addWidget(self.actions.separator)
         self.toolbar.addAction(self.actions.show_statusbar)
         self.toolbar.addAction(self.actions.slideshow)
-        self.toolbar.addAction(self.actions.minimize)
-        self.toolbar.addAction(self.actions.maximize)
-        self.toolbar.addAction(self.actions.exit)
 
-        # Setup: context menu
-        self.label.addAction(self.actions.previous)
-        self.label.addAction(self.actions.next)
-        self.label.addAction(self.actions.fit_to_window)
-        self.label.addAction(self.actions.fit_to_width)
-        self.label.addAction(self.actions.fit_to_height)
-        self.label.addAction(self.actions.show_original_size)
-        self.label.addAction(self.actions.zoom_in)
-        self.label.addAction(self.actions.zoom_out)
-        self.label.addAction(self.actions.rotate_right)
-        self.label.addAction(self.actions.rotate_left)
-        self.label.addAction(self.actions.flip_vertically)
-        self.label.addAction(self.actions.flip_horizontally)
-        self.label.addAction(self.actions.reload)
-        self.label.addAction(self.actions.show_statusbar)
-        self.label.addAction(self.actions.slideshow)
-        self.label.addAction(self.actions.settings)
-        self.label.addAction(self.actions.about)
-        self.label.addAction(self.actions.exit)
+        # Setup Compact theme
+        if self.settings[APP_THEME] == 'Compact':
+            self.setWindowFlags(Qt.FramelessWindowHint)
+            self.toolbar.addAction(self.actions.minimize)
+            self.toolbar.addAction(self.actions.maximize)
+            self.toolbar.addAction(self.actions.exit)
 
         # Restore last window state
         self._restore_geometry()
-
-    def update_ui_settings(self):
-        pass
 
     def repaint_image(self):
         width = self.centralWidget().width() - 2
@@ -210,7 +214,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.repaint_image()
 
     def show_statusbar_action(self):
-        if self.actions.show_statusbar.isChecked():
+        if self.statusbar.isHidden():
             self.statusbar.show()
         else:
             self.statusbar.hide()
@@ -289,7 +293,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     # Helpers
 
-    def bar_log(self, msg):
+    def _show_message(self, msg):
         self.statusBar().showMessage(msg)
 
     def _show_normal(self):
@@ -309,18 +313,12 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def _save_geometry(self):
         geometry = self.saveGeometry()
-        self.app.settings.set('viewer_window_geometry', geometry)
+        self.app.settings.set(VIEWER_WINDOW_GEOMETRY, geometry)
 
     def _restore_geometry(self):
-        show_status_bar = self.app.settings.read('v_show_status_bar', False, bool)
-        load_geometry = self.app.settings.read('v_save_window_geometry', False, bool)
-
-        self.statusbar.setVisible(show_status_bar)
-
-        if load_geometry:
-            last_geometry = self.app.settings.get('viewer_window_geometry', '')
+        if self.settings[V_SAVE_WINDOW_GEOMETRY]:
             try:
-                self.restoreGeometry(last_geometry)
+                self.restoreGeometry(self.settings[VIEWER_WINDOW_GEOMETRY])
                 if self.isMaximized():
                     self._show_maximized()
                 else:

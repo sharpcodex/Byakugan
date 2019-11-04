@@ -1,6 +1,7 @@
 from qtpy.QtWidgets import QDialog, QDialogButtonBox
 from qtpy.QtCore import Qt
 from gui.windows.ui.ui_settings import Ui_SettingsDialog
+from app.settings_manager import *
 
 
 class SettingsDialog(QDialog, Ui_SettingsDialog):
@@ -31,34 +32,34 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
     def save_settings(self):
         self.app.settings.set_all({
             # Look and feel
-            'app_theme': self.app_theme_combo.currentText(),
-            'app_color': self.app_color_combo.currentText(),
-            'm_show_status_bar': self.m_show_status_bar_checkbox.isChecked(),
-            'm_save_window_geometry': self.m_save_window_geometry_checkbox.isChecked(),
-            'v_show_status_bar': self.v_show_status_bar_checkbox.isChecked(),
-            'v_save_window_geometry': self.v_save_window_geometry_checkbox.isChecked(),
-            'e_show_status_bar': self.e_show_status_bar_checkbox.isChecked(),
-            'e_save_window_geometry': self.e_save_window_geometry_checkbox.isChecked(),
+            APP_THEME: self.app_theme_combo.currentText(),
+            APP_COLOR: self.app_color_combo.currentText(),
+            M_SHOW_STATUS_BAR: self.m_show_status_bar_checkbox.isChecked(),
+            M_SAVE_WINDOW_GEOMETRY: self.m_save_window_geometry_checkbox.isChecked(),
+            V_SHOW_STATUS_BAR: self.v_show_status_bar_checkbox.isChecked(),
+            V_SAVE_WINDOW_GEOMETRY: self.v_save_window_geometry_checkbox.isChecked(),
+            E_SHOW_STATUS_BAR: self.e_show_status_bar_checkbox.isChecked(),
+            E_SAVE_WINDOW_GEOMETRY: self.e_save_window_geometry_checkbox.isChecked(),
         })
 
     def load_settings(self):
         d = self.current_settings
-        print(d)
+
         # Look and feel
-        index = self.app_theme_combo.findText(d['app_theme'], Qt.MatchFixedString)
+        index = self.app_theme_combo.findText(d[APP_THEME], Qt.MatchFixedString)
         if index >= 0:
             self.app_theme_combo.setCurrentIndex(index)
 
-        index = self.app_color_combo.findText(d['app_color'], Qt.MatchFixedString)
+        index = self.app_color_combo.findText(d[APP_COLOR], Qt.MatchFixedString)
         if index >= 0:
             self.app_color_combo.setCurrentIndex(index)
 
-        self.m_show_status_bar_checkbox.setChecked(self._read_bool('m_show_status_bar'))
-        self.m_save_window_geometry_checkbox.setChecked(self._read_bool('m_save_window_geometry'))
-        self.v_show_status_bar_checkbox.setChecked(self._read_bool('v_show_status_bar'))
-        self.v_save_window_geometry_checkbox.setChecked(self._read_bool('v_save_window_geometry'))
-        self.e_show_status_bar_checkbox.setChecked(self._read_bool('e_show_status_bar'))
-        self.e_save_window_geometry_checkbox.setChecked(self._read_bool('e_save_window_geometry'))
+        self.m_show_status_bar_checkbox.setChecked(self._read_bool(M_SHOW_STATUS_BAR))
+        self.m_save_window_geometry_checkbox.setChecked(self._read_bool(M_SAVE_WINDOW_GEOMETRY))
+        self.v_show_status_bar_checkbox.setChecked(self._read_bool(V_SHOW_STATUS_BAR))
+        self.v_save_window_geometry_checkbox.setChecked(self._read_bool(V_SAVE_WINDOW_GEOMETRY))
+        self.e_show_status_bar_checkbox.setChecked(self._read_bool(E_SHOW_STATUS_BAR))
+        self.e_save_window_geometry_checkbox.setChecked(self._read_bool(E_SAVE_WINDOW_GEOMETRY))
 
     def _read_bool(self, key):
         return self.app.settings.read(key, value_type=bool)

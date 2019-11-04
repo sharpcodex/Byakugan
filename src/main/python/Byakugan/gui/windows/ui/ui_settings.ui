@@ -114,11 +114,6 @@
                </item>
                <item>
                 <property name="text">
-                 <string>Blue</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
                  <string>Yellow</string>
                 </property>
                </item>

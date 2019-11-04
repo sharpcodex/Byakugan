@@ -28,11 +28,11 @@ if __name__ == '__main__':
         from library.vimage_list import VImageList
 
         window = ViewerWindow(app_manager, VImageList().from_path(target_image))
-        theme_manager.setup(window).show()
     else:
         from gui.windows.main import MainWindow
 
         window = MainWindow(app_manager)
-        theme_manager.setup(window).show()
+
+    theme_manager.setup(window).show()
 
     sys.exit(ctx.app.exec_())

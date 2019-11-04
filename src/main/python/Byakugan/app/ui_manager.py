@@ -3,6 +3,8 @@ from qtpy.QtGui import QColor, QIcon
 from qtpy.QtWidgets import QDesktopWidget
 import qtawesome as qta
 
+from app.settings_manager import *
+
 WINDOW_HEIGHT_P = 0.6
 WINDOW_WIDTH_P = 0.5
 
@@ -137,38 +139,38 @@ class UiManager:
     # -------------- Theme -----------------------
     @cached_property
     def app_theme(self):
-        return self.settings.read('app_theme', self.settings.app_theme, str)
+        return self.settings.read(APP_THEME, self.settings.app_theme, str)
 
     @cached_property
     def app_color(self):
-        return self.settings.read('app_color', self.settings.app_color, str)
+        return self.settings.read(APP_COLOR, self.settings.app_color, str)
 
     @cached_property
     def color(self):
-        app_color = self.app_color
-        if app_color == 'green':
-            return QColor.fromHsv(123, 204, 198, 255)
-        elif app_color == 'red':
+        app_color = self.app_color.lower()
+        if app_color == 'red':
             return QColor.fromHsv(0, 182, 252, 255)
+        elif app_color == 'green':
+            return QColor.fromHsv(123, 204, 198, 255)
         elif app_color == 'yellow':
             return QColor.fromHsv(38, 218, 253, 255)
         elif app_color == 'black':
             return QColor.fromHsv(0, 0, 0, 180)
-        else:
+        else:  # White
             return QColor.fromHsv(0, 0, 255, 150)
 
     @cached_property
     def active_color(self):
-        app_color = self.app_color
-        if app_color == 'green':
-            return QColor.fromHsv(123, 204, 148, 255)
-        elif app_color == 'red':
+        app_color = self.app_color.lower()
+        if app_color == 'red':
             return QColor.fromHsv(0, 182, 202, 255)
+        elif app_color == 'green':
+            return QColor.fromHsv(123, 204, 148, 255)
         elif app_color == 'yellow':
             return QColor.fromHsv(38, 218, 203, 255)
         elif app_color == 'black':
             return QColor.fromHsv(0, 0, 0, 150)
-        else:
+        else:  # White
             return QColor.fromHsv(0, 0, 255, 100)
 
     # -------------- Geometry -----------------------
