@@ -26,11 +26,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Setup toolbar
         self.toolbar.addAction(self.actions.exit)
 
-    # Actions
-    @staticmethod
-    def full_screen_action_triggered():
-        print("Show in full screen mode")
-
     # Helpers
     def bar_log(self, msg):
         self.statusBar().showMessage(msg)
