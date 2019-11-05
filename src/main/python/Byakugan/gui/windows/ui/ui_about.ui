@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>205</height>
+    <width>432</width>
+    <height>196</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,34 +21,59 @@
    <item>
     <widget class="QTabWidget" name="tw_tabs">
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="aboutTab">
       <attribute name="title">
        <string>About</string>
       </attribute>
-      <layout class="QGridLayout" name="aboutTabLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelMascot"/>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="labelAbout">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::RichText</enum>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Byakugan </string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Byakugan is a smart image viewer, editor, and organizer which uses the latest computer vision technologies to make managing digital photos a 'snap'</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -180,32 +205,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="licenseTab">
-      <attribute name="title">
-       <string>License</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="licenseTabLayout">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowserLicense">
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="librariesTab">
       <attribute name="title">
        <string>Libraries</string>
@@ -236,6 +235,9 @@
          </item>
          <item row="2" column="1">
           <widget class="QLabel" name="labelBoostVer">
+           <property name="text">
+            <string>https://github.com/spyder-ide/qtawesome</string>
+           </property>
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
            </property>
@@ -295,31 +297,8 @@
          </item>
          <item row="0" column="1">
           <widget class="QLabel" name="labelQtVer">
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_11">
            <property name="text">
-            <string notr="true">Lib</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string notr="true">Lib</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            <string>https://www.qt.io/</string>
            </property>
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
@@ -328,6 +307,9 @@
          </item>
          <item row="1" column="1">
           <widget class="QLabel" name="labelLibtVer">
+           <property name="text">
+            <string>https://opencv.org/</string>
+           </property>
            <property name="textInteractionFlags">
             <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
            </property>
@@ -341,13 +323,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
