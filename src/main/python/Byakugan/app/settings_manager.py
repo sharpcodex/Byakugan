@@ -1,9 +1,7 @@
 from fbs_runtime.application_context import cached_property
 from qtpy.QtCore import QCoreApplication, QSettings
 
-# Keys
-
-# App Info
+# App Info Keys
 APP_NAME = 'app_name'
 ORGANIZATION_DOMAIN = 'organization_domain'
 ORGANIZATION_NAME = 'organization_name'
@@ -40,11 +38,12 @@ DEFAULT_SETTINGS = {
 class SettingsManager:
     def __init__(self):
         # settings config
-        QCoreApplication.setApplicationName(DEFAULT_SETTINGS['app_name'])
-        QCoreApplication.setOrganizationDomain(DEFAULT_SETTINGS['organization_domain'])
-        QCoreApplication.setOrganizationName(DEFAULT_SETTINGS['organization_name'])
+        QCoreApplication.setApplicationName(DEFAULT_SETTINGS[APP_NAME])
+        QCoreApplication.setOrganizationDomain(DEFAULT_SETTINGS[ORGANIZATION_DOMAIN])
+        QCoreApplication.setOrganizationName(DEFAULT_SETTINGS[ORGANIZATION_NAME])
 
         self.settings = QSettings()
+
         # Fill defaults
         if self.settings.value(APP_NAME, type=str) != DEFAULT_SETTINGS[APP_NAME]:
             for key, value in DEFAULT_SETTINGS.items():
@@ -56,26 +55,20 @@ class SettingsManager:
         except (QSettings.AccessError, QSettings.FormatError):
             pass  # TODO : log errors
 
+    def set_all(self, settings):
+        for key, value in settings.items():
+            self.set(key, value)
+
     def get(self, key, default_value=None):
         if default_value is None and key in DEFAULT_SETTINGS.keys():
             default_value = DEFAULT_SETTINGS[key]
         try:
             value = self.settings.value(key, default_value)
             if type(value) == str and value.lower() in ('true', 'false'):
-                return self.str2bool(value)
+                return self._str2bool(value)
             return value
         except (QSettings.AccessError, QSettings.FormatError):
             return default_value
-
-    def read(self, key, default_value=None, value_type=str):
-        try:
-            return self.settings.value(key, default_value, type=value_type)
-        except (QSettings.AccessError, QSettings.FormatError):
-            return default_value
-
-    def set_all(self, settings):
-        for key, value in settings.items():
-            self.set(key, value)
 
     def get_all(self):
         settings = {}
@@ -83,25 +76,21 @@ class SettingsManager:
             settings[key] = self.get(key)
         return settings
 
+    def read(self, key, default_value=None, value_type=str):
+        try:
+            return self.settings.value(key, default_value, type=value_type)
+        except (QSettings.AccessError, QSettings.FormatError):
+            return default_value
+
     def get_viewer_settings(self):
-        viewer_settings = [VIEWER_WINDOW_GEOMETRY, APP_THEME, APP_COLOR, V_SHOW_STATUS_BAR, V_SAVE_WINDOW_GEOMETRY]
+        viewer_settings = [VIEWER_WINDOW_GEOMETRY,
+                           V_SHOW_STATUS_BAR,
+                           V_SAVE_WINDOW_GEOMETRY]
         settings = {}
         for key in viewer_settings:
             settings[key] = self.get(key)
         return settings
 
-    @cached_property
-    def app_name(self):
-        return self.get(APP_NAME)
-
-    @cached_property
-    def app_color(self):
-        return self.get(APP_COLOR)
-
-    @cached_property
-    def app_theme(self):
-        return self.get(APP_THEME)
-
     @staticmethod
-    def str2bool(st):
+    def _str2bool(st):
         return st.lower() in ("true", "yes", "1")

@@ -9,7 +9,7 @@ class ThemeManager:
 
     # Style
     def setup(self, window):
-        app_theme = self.app.settings.app_theme  # Dark, Light, Compact or classic
+        app_theme = self.app.ui.app_theme  # Dark, Light, Compact or classic
         if app_theme == 'Dark':
             self.apply_dark_theme()
             return ModernWindow(window, self.app)

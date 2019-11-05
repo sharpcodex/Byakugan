@@ -38,7 +38,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
 
     def init_ui(self):
         # Setup: window
-        self.setWindowTitle(self.app.settings.app_name)
+        self.setWindowTitle(self.app.app_name)
         self.setWindowIcon(self.app.ui.window_icon)
         self.centralwidget.layout().setContentsMargins(0, 0, 0, 0)
         self.statusbar.setVisible(self.settings[V_SHOW_STATUS_BAR])
@@ -111,7 +111,7 @@ class ViewerWindow(QMainWindow, Ui_ViewerWindow):
         self.toolbar.addAction(self.actions.slideshow)
 
         # Setup Compact theme
-        if self.settings[APP_THEME] == 'Compact':
+        if self.app.ui.app_theme == 'Compact':
             self.setWindowFlags(Qt.FramelessWindowHint)
             self.toolbar.addAction(self.actions.minimize)
             self.toolbar.addAction(self.actions.maximize)

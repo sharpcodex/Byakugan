@@ -3,7 +3,7 @@ from qtpy.QtGui import QColor, QIcon
 from qtpy.QtWidgets import QDesktopWidget
 import qtawesome as qta
 
-from app.settings_manager import *
+from app.settings_manager import APP_THEME, APP_COLOR
 
 WINDOW_HEIGHT_P = 0.6
 WINDOW_WIDTH_P = 0.5
@@ -137,13 +137,14 @@ class UiManager:
         return QIcon(self.ctx.get_resource('images/main.png'))
 
     # -------------- Theme -----------------------
+
     @cached_property
     def app_theme(self):
-        return self.settings.read(APP_THEME, self.settings.app_theme, str)
+        return self.settings.get(APP_THEME)
 
     @cached_property
     def app_color(self):
-        return self.settings.read(APP_COLOR, self.settings.app_color, str)
+        return self.settings.get(APP_COLOR)
 
     @cached_property
     def color(self):
@@ -197,7 +198,7 @@ class UiManager:
     def best_window_height(self):
         return self.screen_height * WINDOW_HEIGHT_P
 
-    # Helpers
+    # -------------- Helpers -----------------------
 
     def get_stylesheet(self, sheet):
         with open(self.ctx.get_resource('themes/{}'.format(sheet))) as stylesheet:
