@@ -54,12 +54,9 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
         if index >= 0:
             self.app_color_combo.setCurrentIndex(index)
 
-        self.m_show_status_bar_checkbox.setChecked(self._read_bool(M_SHOW_STATUS_BAR))
-        self.m_save_window_geometry_checkbox.setChecked(self._read_bool(M_SAVE_WINDOW_GEOMETRY))
-        self.v_show_status_bar_checkbox.setChecked(self._read_bool(V_SHOW_STATUS_BAR))
-        self.v_save_window_geometry_checkbox.setChecked(self._read_bool(V_SAVE_WINDOW_GEOMETRY))
-        self.e_show_status_bar_checkbox.setChecked(self._read_bool(E_SHOW_STATUS_BAR))
-        self.e_save_window_geometry_checkbox.setChecked(self._read_bool(E_SAVE_WINDOW_GEOMETRY))
-
-    def _read_bool(self, key):
-        return self.app.settings.read(key, value_type=bool)
+        self.m_show_status_bar_checkbox.setChecked(self.app.settings.get(M_SHOW_STATUS_BAR))
+        self.m_save_window_geometry_checkbox.setChecked(self.app.settings.get(M_SAVE_WINDOW_GEOMETRY))
+        self.v_show_status_bar_checkbox.setChecked(self.app.settings.get(V_SHOW_STATUS_BAR))
+        self.v_save_window_geometry_checkbox.setChecked(self.app.settings.get(V_SAVE_WINDOW_GEOMETRY))
+        self.e_show_status_bar_checkbox.setChecked(self.app.settings.get(E_SHOW_STATUS_BAR))
+        self.e_save_window_geometry_checkbox.setChecked(self.app.settings.get(E_SAVE_WINDOW_GEOMETRY))
